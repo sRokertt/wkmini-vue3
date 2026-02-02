@@ -1,10 +1,14 @@
 <script setup>
+import AppHeader from '@/components/layout/AppHeader.vue'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 </script>
 
 <template>
   <main class="min-h-screen bg-[#f7f5f1] px-6 py-12 text-slate-900">
     <div class="mx-auto max-w-5xl">
+      <div class="mb-8">
+        <AppHeader />
+      </div>
       <Card class="border-slate-200/80 bg-white/80">
         <CardHeader>
           <CardTitle>关于 wkmini</CardTitle>

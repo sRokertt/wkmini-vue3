@@ -9,7 +9,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 <template>
   <main class="min-h-screen bg-[#f7f5f1] px-6 py-12 text-slate-900">
     <div class="mx-auto max-w-6xl">
-      <AppHeader />
+      <div class="mb-8">
+        <AppHeader />
+      </div>
       <section class="rounded-3xl border border-white/80 bg-white/70 p-8 shadow-[0_24px_60px_-40px_rgba(15,23,42,0.35)] backdrop-blur">
         <div class="flex flex-wrap items-center gap-3">
           <Badge class="bg-slate-900 text-white">学习路径</Badge>
@@ -47,7 +49,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
                 </CardContent>
                 <CardFooter class="flex items-center justify-between">
                   <Badge variant="outline">12 周</Badge>
-                  <Button variant="ghost">查看详情</Button>
+                  <router-link to="/paths/1">
+                    <Button variant="ghost">查看详情</Button>
+                  </router-link>
                 </CardFooter>
               </Card>
               <Card class="border-slate-200/80 bg-white/80">
@@ -60,7 +64,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
                 </CardContent>
                 <CardFooter class="flex items-center justify-between">
                   <Badge variant="outline">8 周</Badge>
-                  <Button variant="ghost">查看详情</Button>
+                  <router-link to="/paths/2">
+                    <Button variant="ghost">查看详情</Button>
+                  </router-link>
                 </CardFooter>
               </Card>
             </div>

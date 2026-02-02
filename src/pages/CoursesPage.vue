@@ -4,12 +4,21 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
+const goCourse = (id) => {
+  router.push(`/courses/${id}`)
+}
 </script>
 
 <template>
   <main class="min-h-screen bg-[#f7f5f1] px-6 py-12 text-slate-900">
     <div class="mx-auto max-w-6xl">
-      <AppHeader />
+      <div class="mb-8">
+        <AppHeader />
+      </div>
       <section class="rounded-3xl border border-white/80 bg-white/70 p-8 shadow-[0_24px_60px_-40px_rgba(15,23,42,0.35)] backdrop-blur">
         <div class="flex flex-wrap items-center gap-3">
           <Badge class="bg-slate-900 text-white">课程库</Badge>
@@ -39,7 +48,7 @@ import { Input } from '@/components/ui/input'
           </CardContent>
           <CardFooter class="flex items-center justify-between">
             <Badge variant="outline">8 章节</Badge>
-            <Button variant="ghost">进入</Button>
+            <Button variant="ghost" @click="goCourse(1)">进入</Button>
           </CardFooter>
         </Card>
         <Card class="border-slate-200/80 bg-white/80">
@@ -52,7 +61,7 @@ import { Input } from '@/components/ui/input'
           </CardContent>
           <CardFooter class="flex items-center justify-between">
             <Badge variant="outline">12 章节</Badge>
-            <Button variant="ghost">进入</Button>
+            <Button variant="ghost" @click="goCourse(2)">进入</Button>
           </CardFooter>
         </Card>
         <Card class="border-slate-200/80 bg-white/80">
@@ -65,7 +74,7 @@ import { Input } from '@/components/ui/input'
           </CardContent>
           <CardFooter class="flex items-center justify-between">
             <Badge variant="outline">9 章节</Badge>
-            <Button variant="ghost">进入</Button>
+            <Button variant="ghost" @click="goCourse(3)">进入</Button>
           </CardFooter>
         </Card>
         <Card class="border-slate-200/80 bg-white/80">
@@ -78,7 +87,7 @@ import { Input } from '@/components/ui/input'
           </CardContent>
           <CardFooter class="flex items-center justify-between">
             <Badge variant="outline">10 章节</Badge>
-            <Button variant="ghost">进入</Button>
+            <Button variant="ghost" @click="goCourse(4)">进入</Button>
           </CardFooter>
         </Card>
         <Card class="border-slate-200/80 bg-white/80">
@@ -91,7 +100,7 @@ import { Input } from '@/components/ui/input'
           </CardContent>
           <CardFooter class="flex items-center justify-between">
             <Badge variant="outline">6 章节</Badge>
-            <Button variant="ghost">进入</Button>
+            <Button variant="ghost" @click="goCourse(5)">进入</Button>
           </CardFooter>
         </Card>
         <Card class="border-slate-200/80 bg-white/80">
@@ -104,7 +113,7 @@ import { Input } from '@/components/ui/input'
           </CardContent>
           <CardFooter class="flex items-center justify-between">
             <Badge variant="outline">4 章节</Badge>
-            <Button variant="ghost">进入</Button>
+            <Button variant="ghost" @click="goCourse(6)">进入</Button>
           </CardFooter>
         </Card>
       </section>
