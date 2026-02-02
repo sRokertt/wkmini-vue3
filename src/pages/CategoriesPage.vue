@@ -1,5 +1,5 @@
 <script setup>
-import AppHeader from '@/components/layout/AppHeader.vue'
+import BasePage from '@/components/layout/BasePage.vue'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
@@ -7,13 +7,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 </script>
 
 <template>
-  <main class="min-h-screen bg-[#f7f5f1] px-6 py-12 text-slate-900">
-    <div class="mx-auto max-w-6xl">
-      <div class="mb-8">
-        <AppHeader />
-      </div>
-
-      <section class="rounded-3xl border border-white/80 bg-white/70 p-8 shadow-[0_24px_60px_-40px_rgba(15,23,42,0.35)] backdrop-blur">
+  <BasePage>
+    <section class="rounded-3xl border border-white/80 bg-white/70 p-8 shadow-[0_24px_60px_-40px_rgba(15,23,42,0.35)] backdrop-blur">
         <div class="flex flex-wrap items-center gap-3">
           <Badge class="bg-slate-900 text-white">分类 / 标签</Badge>
           <Badge variant="outline" class="border-amber-300/60 bg-amber-50 text-amber-700">内容导航</Badge>
@@ -23,9 +18,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
           <h1 class="text-3xl font-semibold">分类与标签页</h1>
           <p class="mt-2 text-sm text-slate-600">快速定位课程主题与知识域。</p>
         </div>
-      </section>
+    </section>
 
-      <section class="mt-10">
+    <section class="mt-10">
         <Tabs default-value="categories" class="w-full">
           <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
@@ -132,7 +127,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
             </div>
           </TabsContent>
         </Tabs>
-      </section>
-    </div>
-  </main>
+    </section>
+  </BasePage>
 </template>

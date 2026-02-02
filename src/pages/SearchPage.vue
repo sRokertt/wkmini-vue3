@@ -1,7 +1,7 @@
 <script setup>
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
-import AppHeader from '@/components/layout/AppHeader.vue'
+import BasePage from '@/components/layout/BasePage.vue'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 
@@ -11,13 +11,8 @@ const scope = computed(() => route.query.scope || '全部')
 </script>
 
 <template>
-  <main class="min-h-screen bg-[#f7f5f1] px-6 py-12 text-slate-900">
-    <div class="mx-auto max-w-6xl">
-      <div class="mb-8">
-        <AppHeader />
-      </div>
-
-      <section class="rounded-3xl border border-white/80 bg-white/70 p-8 shadow-[0_24px_60px_-40px_rgba(15,23,42,0.35)] backdrop-blur">
+  <BasePage>
+    <section class="rounded-3xl border border-white/80 bg-white/70 p-8 shadow-[0_24px_60px_-40px_rgba(15,23,42,0.35)] backdrop-blur">
         <div class="flex flex-wrap items-center gap-3">
           <Badge class="bg-slate-900 text-white">搜索结果</Badge>
           <Badge variant="outline" class="border-amber-300/60 bg-amber-50 text-amber-700">{{ keyword }}</Badge>
@@ -27,9 +22,9 @@ const scope = computed(() => route.query.scope || '全部')
           <h1 class="text-3xl font-semibold">搜索页</h1>
           <p class="mt-2 text-sm text-slate-600">后续可接入真实课程与文章结果。</p>
         </div>
-      </section>
+    </section>
 
-      <section class="mt-10">
+    <section class="mt-10">
         <Card class="border-slate-200/80 bg-white/80">
           <CardHeader>
             <CardTitle>结果区域</CardTitle>
@@ -39,7 +34,6 @@ const scope = computed(() => route.query.scope || '全部')
             <p class="text-sm text-slate-600">请先完成后端搜索 API 后再接入数据。</p>
           </CardContent>
         </Card>
-      </section>
-    </div>
-  </main>
+    </section>
+  </BasePage>
 </template>

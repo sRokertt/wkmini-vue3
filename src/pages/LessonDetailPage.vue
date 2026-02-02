@@ -1,18 +1,13 @@
 <script setup>
-import AppHeader from '@/components/layout/AppHeader.vue'
+import BasePage from '@/components/layout/BasePage.vue'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 </script>
 
 <template>
-  <main class="min-h-screen bg-[#f7f5f1] px-6 py-12 text-slate-900">
-    <div class="mx-auto max-w-6xl">
-      <div class="mb-8">
-        <AppHeader />
-      </div>
-
-      <section class="mt-10 grid gap-6 lg:grid-cols-[1.25fr_0.75fr]">
+  <BasePage>
+    <section class="grid gap-6 lg:grid-cols-[1.25fr_0.75fr]">
         <article class="rounded-3xl border border-white/80 bg-white/70 p-8 shadow-[0_24px_60px_-40px_rgba(15,23,42,0.35)] backdrop-blur">
           <div class="flex flex-wrap items-center gap-3">
             <Badge class="bg-slate-900 text-white">章节/文章</Badge>
@@ -90,7 +85,6 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
             </CardContent>
           </Card>
         </aside>
-      </section>
-    </div>
-  </main>
+    </section>
+  </BasePage>
 </template>

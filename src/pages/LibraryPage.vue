@@ -1,5 +1,5 @@
 <script setup>
-import AppHeader from '@/components/layout/AppHeader.vue'
+import BasePage from '@/components/layout/BasePage.vue'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
@@ -8,12 +8,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 </script>
 
 <template>
-  <main class="min-h-screen bg-[#f7f5f1] px-6 py-12 text-slate-900">
-    <div class="mx-auto max-w-6xl">
-      <div class="mb-8">
-        <AppHeader />
-      </div>
-      <section class="rounded-3xl border border-white/80 bg-white/70 p-8 shadow-[0_24px_60px_-40px_rgba(15,23,42,0.35)] backdrop-blur">
+  <BasePage>
+    <section class="rounded-3xl border border-white/80 bg-white/70 p-8 shadow-[0_24px_60px_-40px_rgba(15,23,42,0.35)] backdrop-blur">
         <div class="flex flex-wrap items-center gap-3">
           <Badge class="bg-slate-900 text-white">资料库</Badge>
           <Badge variant="outline" class="border-slate-200 bg-white/70">模板沉淀</Badge>
@@ -35,9 +31,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
           <Badge variant="outline">项目清单</Badge>
           <Badge variant="outline">学习方法论</Badge>
         </div>
-      </section>
+    </section>
 
-      <section class="mt-10">
+    <section class="mt-10">
         <Tabs default-value="templates" class="w-full">
           <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
@@ -174,7 +170,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
             </div>
           </TabsContent>
         </Tabs>
-      </section>
-    </div>
-  </main>
+    </section>
+  </BasePage>
 </template>
