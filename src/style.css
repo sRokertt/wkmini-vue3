@@ -1,4 +1,14 @@
 @import "tailwindcss";
+
+button,
+[role="button"] {
+  cursor: pointer;
+}
+
+button:disabled,
+[role="button"][aria-disabled="true"] {
+  cursor: not-allowed;
+}
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));

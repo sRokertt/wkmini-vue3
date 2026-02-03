@@ -39,7 +39,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
             <CardFooter class="flex items-center justify-between">
               <Badge variant="outline">12 周</Badge>
               <router-link to="/paths/1">
-                <Button variant="ghost">查看详情</Button>
+                <Button variant="outline" size="sm">查看详情</Button>
               </router-link>
             </CardFooter>
           </Card>
@@ -54,7 +54,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
             <CardFooter class="flex items-center justify-between">
               <Badge variant="outline">6 周</Badge>
               <router-link to="/paths/2">
-                <Button variant="ghost">查看详情</Button>
+                <Button variant="outline" size="sm">查看详情</Button>
               </router-link>
             </CardFooter>
           </Card>
@@ -73,7 +73,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
             <CardFooter class="flex items-center justify-between">
               <Badge variant="outline">8 周</Badge>
               <router-link to="/paths/3">
-                <Button variant="ghost">查看详情</Button>
+                <Button variant="outline" size="sm">查看详情</Button>
               </router-link>
             </CardFooter>
           </Card>
@@ -88,7 +88,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
             <CardFooter class="flex items-center justify-between">
               <Badge variant="outline">6 周</Badge>
               <router-link to="/paths/4">
-                <Button variant="ghost">查看详情</Button>
+                <Button variant="outline" size="sm">查看详情</Button>
               </router-link>
             </CardFooter>
           </Card>
@@ -107,7 +107,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
             <CardFooter class="flex items-center justify-between">
               <Badge variant="outline">6 周</Badge>
               <router-link to="/paths/5">
-                <Button variant="ghost">查看详情</Button>
+                <Button variant="outline" size="sm">查看详情</Button>
               </router-link>
             </CardFooter>
           </Card>
@@ -122,7 +122,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
             <CardFooter class="flex items-center justify-between">
               <Badge variant="outline">6 周</Badge>
               <router-link to="/paths/6">
-                <Button variant="ghost">查看详情</Button>
+                <Button variant="outline" size="sm">查看详情</Button>
               </router-link>
             </CardFooter>
           </Card>

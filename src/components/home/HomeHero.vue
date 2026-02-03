@@ -23,7 +23,7 @@ import { Input } from '@/components/ui/input'
         <Input class="bg-white/80" placeholder="搜索课程、章节、关键词" />
       </div>
       <router-link class="w-full sm:w-auto" to="/search">
-        <Button class="w-full cursor-pointer bg-slate-900 text-white hover:bg-slate-800">开始探索</Button>
+        <Button class="w-full bg-slate-900 text-white hover:bg-slate-800">开始探索</Button>
       </router-link>
     </div>
     <div class="mt-6 grid gap-3 sm:grid-cols-3">

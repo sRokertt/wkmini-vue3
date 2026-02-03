@@ -34,7 +34,7 @@ import {
         <CardFooter class="flex items-center justify-between">
           <Badge variant="outline">8 章节</Badge>
           <router-link to="/courses/1">
-            <Button variant="ghost">进入</Button>
+            <Button variant="outline" size="sm">进入</Button>
           </router-link>
         </CardFooter>
       </Card>
@@ -49,7 +49,7 @@ import {
         <CardFooter class="flex items-center justify-between">
           <Badge variant="outline">12 章节</Badge>
           <router-link to="/courses/2">
-            <Button variant="ghost">进入</Button>
+            <Button variant="outline" size="sm">进入</Button>
           </router-link>
         </CardFooter>
       </Card>
@@ -64,7 +64,7 @@ import {
         <CardFooter class="flex items-center justify-between">
           <Badge variant="outline">9 章节</Badge>
           <router-link to="/courses/3">
-            <Button variant="ghost">进入</Button>
+            <Button variant="outline" size="sm">进入</Button>
           </router-link>
         </CardFooter>
       </Card>
