@@ -63,7 +63,7 @@ import { Button } from '@/components/ui/button'
         关于
       </router-link>
     </nav>
-    <router-link class="hidden md:inline-flex" to="/paths/1">
+    <router-link class="hidden md:inline-flex" to="/courses">
       <Button class="bg-slate-900 text-white hover:bg-slate-800">进入学习</Button>
     </router-link>
   </header>
