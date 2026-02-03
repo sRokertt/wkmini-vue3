@@ -23,36 +23,28 @@ import { Input } from '@/components/ui/input'
         <Input class="bg-white/80" placeholder="搜索课程、章节、关键词" />
       </div>
       <router-link class="w-full sm:w-auto" to="/search">
-        <Button class="w-full bg-slate-900 text-white hover:bg-slate-800">开始探索</Button>
+        <Button class="w-full cursor-pointer bg-slate-900 text-white hover:bg-slate-800">开始探索</Button>
       </router-link>
     </div>
     <div class="mt-6 grid gap-3 sm:grid-cols-3">
-      <router-link class="rounded-2xl border border-slate-200/70 bg-white/80 p-4 hover:border-slate-300" to="/courses">
+      <div class="rounded-2xl border border-slate-200/70 bg-white/80 p-4">
         <p class="text-xs font-medium text-slate-500">重点覆盖</p>
         <p class="mt-2 text-lg font-semibold">高频课程</p>
-      </router-link>
-      <router-link class="rounded-2xl border border-slate-200/70 bg-white/80 p-4 hover:border-slate-300" to="/paths">
+      </div>
+      <div class="rounded-2xl border border-slate-200/70 bg-white/80 p-4">
         <p class="text-xs font-medium text-slate-500">知识路径</p>
         <p class="mt-2 text-lg font-semibold">可执行规划</p>
-      </router-link>
-      <router-link class="rounded-2xl border border-slate-200/70 bg-white/80 p-4 hover:border-slate-300" to="/library">
+      </div>
+      <div class="rounded-2xl border border-slate-200/70 bg-white/80 p-4">
         <p class="text-xs font-medium text-slate-500">资料沉淀</p>
         <p class="mt-2 text-lg font-semibold">可复用模板</p>
-      </router-link>
+      </div>
     </div>
     <div class="mt-6 flex flex-wrap gap-2 text-xs text-slate-500">
-      <router-link to="/search?scope=tag&q=数学">
-        <Badge variant="outline">数学</Badge>
-      </router-link>
-      <router-link to="/search?scope=tag&q=数据结构">
-        <Badge variant="outline">数据结构</Badge>
-      </router-link>
-      <router-link to="/search?scope=tag&q=线性代数">
-        <Badge variant="outline">线性代数</Badge>
-      </router-link>
-      <router-link to="/search?scope=tag&q=机器学习">
-        <Badge variant="outline">机器学习</Badge>
-      </router-link>
+      <Badge variant="outline">数学</Badge>
+      <Badge variant="outline">数据结构</Badge>
+      <Badge variant="outline">线性代数</Badge>
+      <Badge variant="outline">机器学习</Badge>
     </div>
   </div>
 </template>

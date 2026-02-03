@@ -35,7 +35,7 @@ import {
     </CardContent>
     <CardFooter>
       <router-link class="w-full" to="/lessons/2">
-        <Button variant="outline" class="w-full">继续上次进度</Button>
+        <Button variant="outline" class="w-full cursor-pointer">继续上次进度</Button>
       </router-link>
     </CardFooter>
   </Card>
