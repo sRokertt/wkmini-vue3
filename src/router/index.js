@@ -7,7 +7,6 @@ import PathsPage from '@/pages/PathsPage.vue'
 import PathDetailPage from '@/pages/PathDetailPage.vue'
 import LibraryPage from '@/pages/LibraryPage.vue'
 import AboutPage from '@/pages/AboutPage.vue'
-import CategoriesPage from '@/pages/CategoriesPage.vue'
 import SearchPage from '@/pages/SearchPage.vue'
 
 const router = createRouter({
@@ -20,7 +19,6 @@ const router = createRouter({
     { path: '/paths', name: 'paths', component: PathsPage },
     { path: '/paths/:id', name: 'path-detail', component: PathDetailPage },
     { path: '/library', name: 'library', component: LibraryPage },
-    { path: '/categories', name: 'categories', component: CategoriesPage },
     { path: '/search', name: 'search', component: SearchPage },
     { path: '/about', name: 'about', component: AboutPage },
   ],

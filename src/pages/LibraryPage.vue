@@ -34,18 +34,132 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
     </section>
 
     <section class="mt-10">
-        <Tabs default-value="templates" class="w-full">
+        <Tabs default-value="all" class="w-full">
           <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <h2 class="text-2xl font-semibold">资料分类</h2>
               <p class="mt-1 text-sm text-slate-500">按内容类型整理</p>
             </div>
             <TabsList>
-              <TabsTrigger value="templates">模板</TabsTrigger>
+              <TabsTrigger value="all">全部</TabsTrigger>
+              <TabsTrigger value="templates">模板库</TabsTrigger>
               <TabsTrigger value="checklists">清单</TabsTrigger>
-              <TabsTrigger value="tools">工具</TabsTrigger>
+              <TabsTrigger value="tools">工具集</TabsTrigger>
             </TabsList>
           </div>
+
+          <TabsContent value="all" class="mt-6">
+            <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+              <Card class="border-slate-200/80 bg-white/80">
+                <CardHeader>
+                  <CardTitle>高频公式卡片</CardTitle>
+                  <CardDescription>快速复习与记忆</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <p class="text-sm text-slate-600">面向数学与算法常用公式。</p>
+                </CardContent>
+                <CardFooter>
+                  <Button variant="outline" size="sm">进入</Button>
+                </CardFooter>
+              </Card>
+              <Card class="border-slate-200/80 bg-white/80">
+                <CardHeader>
+                  <CardTitle>算法模板库</CardTitle>
+                  <CardDescription>常见解题套路</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <p class="text-sm text-slate-600">涵盖图、树、动态规划等。</p>
+                </CardContent>
+                <CardFooter>
+                  <Button variant="outline" size="sm">进入</Button>
+                </CardFooter>
+              </Card>
+              <Card class="border-slate-200/80 bg-white/80">
+                <CardHeader>
+                  <CardTitle>模型评估模板</CardTitle>
+                  <CardDescription>指标与实验记录</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <p class="text-sm text-slate-600">用于沉淀实验过程。</p>
+                </CardContent>
+                <CardFooter>
+                  <Button variant="outline" size="sm">进入</Button>
+                </CardFooter>
+              </Card>
+              <Card class="border-slate-200/80 bg-white/80">
+                <CardHeader>
+                  <CardTitle>项目实践清单</CardTitle>
+                  <CardDescription>从需求到交付</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <p class="text-sm text-slate-600">帮助自学者完成可展示成果。</p>
+                </CardContent>
+                <CardFooter>
+                  <Button variant="outline" size="sm">进入</Button>
+                </CardFooter>
+              </Card>
+              <Card class="border-slate-200/80 bg-white/80">
+                <CardHeader>
+                  <CardTitle>学习复盘清单</CardTitle>
+                  <CardDescription>总结与迭代</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <p class="text-sm text-slate-600">让学习成果可持续。</p>
+                </CardContent>
+                <CardFooter>
+                  <Button variant="outline" size="sm">进入</Button>
+                </CardFooter>
+              </Card>
+              <Card class="border-slate-200/80 bg-white/80">
+                <CardHeader>
+                  <CardTitle>课程笔记清单</CardTitle>
+                  <CardDescription>结构化记录</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <p class="text-sm text-slate-600">沉淀高质量笔记。</p>
+                </CardContent>
+                <CardFooter>
+                  <Button variant="outline" size="sm">进入</Button>
+                </CardFooter>
+              </Card>
+              <Card class="border-slate-200/80 bg-white/80">
+                <CardHeader>
+                  <CardTitle>可视化工具</CardTitle>
+                  <CardDescription>线代与几何</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <p class="text-sm text-slate-600">配合图形辅助理解。</p>
+                </CardContent>
+                <CardFooter>
+                  <Button variant="outline" size="sm">进入</Button>
+                </CardFooter>
+              </Card>
+              <Card class="border-slate-200/80 bg-white/80">
+                <CardHeader>
+                  <CardTitle>数据集索引</CardTitle>
+                  <CardDescription>常用公开数据</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <p class="text-sm text-slate-600">用于练习与实验。</p>
+                </CardContent>
+                <CardFooter>
+                  <Button variant="outline" size="sm">进入</Button>
+                </CardFooter>
+              </Card>
+              <Card class="border-slate-200/80 bg-white/80">
+                <CardHeader>
+                  <CardTitle>阅读资料库</CardTitle>
+                  <CardDescription>精选论文与文章</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <p class="text-sm text-slate-600">持续更新内容。</p>
+                </CardContent>
+                <CardFooter>
+                  <Button variant="outline" size="sm">进入</Button>
+                </CardFooter>
+              </Card>
+            </div>
+          </TabsContent>
 
           <TabsContent value="templates" class="mt-6">
             <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -58,7 +172,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
                   <p class="text-sm text-slate-600">面向数学与算法常用公式。</p>
                 </CardContent>
                 <CardFooter>
-                  <Button variant="ghost">进入</Button>
+                  <Button variant="outline" size="sm">进入</Button>
                 </CardFooter>
               </Card>
               <Card class="border-slate-200/80 bg-white/80">
@@ -70,7 +184,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
                   <p class="text-sm text-slate-600">涵盖图、树、动态规划等。</p>
                 </CardContent>
                 <CardFooter>
-                  <Button variant="ghost">进入</Button>
+                  <Button variant="outline" size="sm">进入</Button>
                 </CardFooter>
               </Card>
               <Card class="border-slate-200/80 bg-white/80">
@@ -82,7 +196,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
                   <p class="text-sm text-slate-600">用于沉淀实验过程。</p>
                 </CardContent>
                 <CardFooter>
-                  <Button variant="ghost">进入</Button>
+                  <Button variant="outline" size="sm">进入</Button>
                 </CardFooter>
               </Card>
             </div>
@@ -99,7 +213,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
                   <p class="text-sm text-slate-600">帮助自学者完成可展示成果。</p>
                 </CardContent>
                 <CardFooter>
-                  <Button variant="ghost">进入</Button>
+                  <Button variant="outline" size="sm">进入</Button>
                 </CardFooter>
               </Card>
               <Card class="border-slate-200/80 bg-white/80">
@@ -111,7 +225,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
                   <p class="text-sm text-slate-600">让学习成果可持续。</p>
                 </CardContent>
                 <CardFooter>
-                  <Button variant="ghost">进入</Button>
+                  <Button variant="outline" size="sm">进入</Button>
                 </CardFooter>
               </Card>
               <Card class="border-slate-200/80 bg-white/80">
@@ -123,7 +237,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
                   <p class="text-sm text-slate-600">沉淀高质量笔记。</p>
                 </CardContent>
                 <CardFooter>
-                  <Button variant="ghost">进入</Button>
+                  <Button variant="outline" size="sm">进入</Button>
                 </CardFooter>
               </Card>
             </div>
@@ -140,7 +254,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
                   <p class="text-sm text-slate-600">配合图形辅助理解。</p>
                 </CardContent>
                 <CardFooter>
-                  <Button variant="ghost">进入</Button>
+                  <Button variant="outline" size="sm">进入</Button>
                 </CardFooter>
               </Card>
               <Card class="border-slate-200/80 bg-white/80">
@@ -152,7 +266,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
                   <p class="text-sm text-slate-600">用于练习与实验。</p>
                 </CardContent>
                 <CardFooter>
-                  <Button variant="ghost">进入</Button>
+                  <Button variant="outline" size="sm">进入</Button>
                 </CardFooter>
               </Card>
               <Card class="border-slate-200/80 bg-white/80">
@@ -164,7 +278,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
                   <p class="text-sm text-slate-600">持续更新内容。</p>
                 </CardContent>
                 <CardFooter>
-                  <Button variant="ghost">进入</Button>
+                  <Button variant="outline" size="sm">进入</Button>
                 </CardFooter>
               </Card>
             </div>

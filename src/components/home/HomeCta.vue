@@ -13,9 +13,6 @@ import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from '@/comp
         </CardDescription>
       </CardHeader>
       <CardFooter class="flex flex-col gap-3 sm:flex-row sm:items-center">
-        <router-link to="/paths/1">
-          <Button class="bg-white text-slate-900 hover:bg-slate-100">创建学习路径</Button>
-        </router-link>
         <router-link to="/paths">
           <Button variant="outline" class="border-white bg-white text-slate-900 hover:bg-transparent hover:text-white">查看路线图</Button>
         </router-link>

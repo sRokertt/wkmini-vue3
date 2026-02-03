@@ -50,14 +50,6 @@ import { Button } from '@/components/ui/button'
         class="transition hover:text-slate-900"
         active-class="text-slate-900 underline underline-offset-8 decoration-2 decoration-slate-900"
         exact-active-class="text-slate-900 underline underline-offset-8 decoration-2 decoration-slate-900"
-        to="/categories"
-      >
-        分类/标签
-      </router-link>
-      <router-link
-        class="transition hover:text-slate-900"
-        active-class="text-slate-900 underline underline-offset-8 decoration-2 decoration-slate-900"
-        exact-active-class="text-slate-900 underline underline-offset-8 decoration-2 decoration-slate-900"
         to="/about"
       >
         关于
