@@ -12,10 +12,10 @@ defineProps({
 
 <template>
   <main class="flex min-h-screen flex-col bg-[#f7f5f1] text-slate-900">
-    <div :class="['mx-auto', maxWidth, 'px-6', 'py-12']">
-      <div class="mb-8">
-        <AppHeader />
-      </div>
+    <header :class="['mx-auto', maxWidth, 'px-8', 'pt-12', 'pb-8']">
+      <AppHeader />
+    </header>
+    <div :class="['mx-auto', maxWidth, 'px-8', 'pb-12']">
       <slot />
     </div>
     <div class="mt-auto">
