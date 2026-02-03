@@ -38,7 +38,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
             </CardContent>
             <CardFooter class="flex items-center justify-between">
               <Badge variant="outline">12 周</Badge>
-              <Button variant="ghost">查看详情</Button>
+              <router-link to="/paths/1">
+                <Button variant="ghost">查看详情</Button>
+              </router-link>
             </CardFooter>
           </Card>
           <Card class="border-slate-200">
@@ -51,7 +53,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
             </CardContent>
             <CardFooter class="flex items-center justify-between">
               <Badge variant="outline">6 周</Badge>
-              <Button variant="ghost">查看详情</Button>
+              <router-link to="/paths/2">
+                <Button variant="ghost">查看详情</Button>
+              </router-link>
             </CardFooter>
           </Card>
         </div>
@@ -66,6 +70,12 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
             <CardContent>
               <p class="text-sm text-slate-600">为后续系统设计与工程实践服务。</p>
             </CardContent>
+            <CardFooter class="flex items-center justify-between">
+              <Badge variant="outline">8 周</Badge>
+              <router-link to="/paths/3">
+                <Button variant="ghost">查看详情</Button>
+              </router-link>
+            </CardFooter>
           </Card>
           <Card class="border-slate-200">
             <CardHeader>
@@ -75,6 +85,12 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
             <CardContent>
               <p class="text-sm text-slate-600">从个人项目过渡到可靠交付。</p>
             </CardContent>
+            <CardFooter class="flex items-center justify-between">
+              <Badge variant="outline">6 周</Badge>
+              <router-link to="/paths/4">
+                <Button variant="ghost">查看详情</Button>
+              </router-link>
+            </CardFooter>
           </Card>
         </div>
       </TabsContent>
@@ -88,6 +104,12 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
             <CardContent>
               <p class="text-sm text-slate-600">聚焦模型训练最常用的数学工具。</p>
             </CardContent>
+            <CardFooter class="flex items-center justify-between">
+              <Badge variant="outline">6 周</Badge>
+              <router-link to="/paths/5">
+                <Button variant="ghost">查看详情</Button>
+              </router-link>
+            </CardFooter>
           </Card>
           <Card class="border-slate-200">
             <CardHeader>
@@ -97,6 +119,12 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
             <CardContent>
               <p class="text-sm text-slate-600">配合示例与可视化讲解。</p>
             </CardContent>
+            <CardFooter class="flex items-center justify-between">
+              <Badge variant="outline">6 周</Badge>
+              <router-link to="/paths/6">
+                <Button variant="ghost">查看详情</Button>
+              </router-link>
+            </CardFooter>
           </Card>
         </div>
       </TabsContent>

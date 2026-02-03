@@ -18,7 +18,9 @@ import {
         <h2 class="text-2xl font-semibold">精选课程</h2>
         <p class="mt-1 text-sm text-slate-500">为 v1.0 MVP 准备的高频主题</p>
       </div>
-      <Button variant="outline" class="hidden sm:inline-flex">查看全部</Button>
+      <router-link to="/courses">
+        <Button variant="outline" class="hidden sm:inline-flex">查看全部</Button>
+      </router-link>
     </div>
     <div class="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
       <Card class="border-slate-200/80 bg-white/80">
@@ -31,7 +33,9 @@ import {
         </CardContent>
         <CardFooter class="flex items-center justify-between">
           <Badge variant="outline">8 章节</Badge>
-          <Button variant="ghost">进入</Button>
+          <router-link to="/courses/1">
+            <Button variant="ghost">进入</Button>
+          </router-link>
         </CardFooter>
       </Card>
       <Card class="border-slate-200/80 bg-white/80">
@@ -44,7 +48,9 @@ import {
         </CardContent>
         <CardFooter class="flex items-center justify-between">
           <Badge variant="outline">12 章节</Badge>
-          <Button variant="ghost">进入</Button>
+          <router-link to="/courses/2">
+            <Button variant="ghost">进入</Button>
+          </router-link>
         </CardFooter>
       </Card>
       <Card class="border-slate-200/80 bg-white/80">
@@ -57,7 +63,9 @@ import {
         </CardContent>
         <CardFooter class="flex items-center justify-between">
           <Badge variant="outline">9 章节</Badge>
-          <Button variant="ghost">进入</Button>
+          <router-link to="/courses/3">
+            <Button variant="ghost">进入</Button>
+          </router-link>
         </CardFooter>
       </Card>
     </div>

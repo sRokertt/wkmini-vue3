@@ -34,7 +34,9 @@ import {
       </div>
     </CardContent>
     <CardFooter>
-      <Button variant="outline" class="w-full">继续上次进度</Button>
+      <router-link class="w-full" to="/lessons/2">
+        <Button variant="outline" class="w-full">继续上次进度</Button>
+      </router-link>
     </CardFooter>
   </Card>
 </template>
