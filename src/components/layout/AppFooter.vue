@@ -5,7 +5,7 @@
         <div>
           <p class="text-base font-semibold text-slate-900">wkmini</p>
           <p class="mt-2 max-w-md text-xs text-slate-500">
-            结构化学习展示版，用于对外展示课程与学习路径。
+            面向自学者的结构化课程平台展示版。
           </p>
         </div>
         <div class="flex flex-col gap-2 text-xs">

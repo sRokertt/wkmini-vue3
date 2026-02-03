@@ -16,7 +16,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
           </div>
           <h1 class="mt-5 text-3xl font-semibold">线性代数快速入门</h1>
           <p class="mt-3 text-sm text-slate-600">
-            聚焦向量、矩阵与变换的核心概念，配合可视化推导与练习题，帮助快速建立直觉。
+            聚焦向量、矩阵与线性变换的核心概念，配合推导与练习题，建立可靠的数学直觉。
           </p>
           <div class="mt-6 flex flex-wrap gap-3 text-xs text-slate-500">
             <Badge variant="outline">数学基础</Badge>
@@ -41,7 +41,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
             </div>
             <div>
               <p class="text-xs text-slate-500">适合人群</p>
-              <p class="mt-1">准备进入机器学习/数据科学的自学者</p>
+              <p class="mt-1">准备进入机器学习/数据科学方向的学习者</p>
             </div>
             <div>
               <p class="text-xs text-slate-500">学习建议</p>
@@ -58,12 +58,12 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
         <Card class="border-slate-200/80 bg-white/80">
           <CardHeader>
             <CardTitle>课程目标</CardTitle>
-            <CardDescription>学完后你可以做到</CardDescription>
+            <CardDescription>学完后可达成</CardDescription>
           </CardHeader>
           <CardContent class="space-y-2 text-sm text-slate-600">
             <p>• 理解向量、矩阵与线性变换的几何意义</p>
             <p>• 掌握矩阵分解与特征值的应用场景</p>
-            <p>• 能读懂常见机器学习模型中的线代表达</p>
+            <p>• 读懂常见机器学习模型中的线代表达</p>
           </CardContent>
         </Card>
         <Card class="border-slate-200/80 bg-white/80">

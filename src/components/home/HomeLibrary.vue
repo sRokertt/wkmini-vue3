@@ -7,7 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
     <Card class="border-slate-200/80 bg-white/80">
       <CardHeader>
         <CardTitle>资料库</CardTitle>
-        <CardDescription>聚合可复用的学习资料与工具</CardDescription>
+        <CardDescription>模板、清单与工具的集中管理</CardDescription>
       </CardHeader>
       <CardContent class="grid gap-4 md:grid-cols-3">
         <router-link class="rounded-2xl border border-slate-200/80 bg-white/80 p-4 hover:border-slate-300" to="/library">

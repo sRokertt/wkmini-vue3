@@ -19,8 +19,8 @@ const scope = computed(() => route.query.scope || '全部')
           <Badge variant="outline" class="border-slate-200 bg-white/70">范围：{{ scope }}</Badge>
         </div>
         <div class="mt-5">
-          <h1 class="text-3xl font-semibold">搜索页</h1>
-          <p class="mt-2 text-sm text-slate-600">后续可接入真实课程与文章结果。</p>
+          <h1 class="text-3xl font-semibold">搜索结果</h1>
+          <p class="mt-2 text-sm text-slate-600">用于展示课程与文章的检索结果。</p>
         </div>
     </section>
 

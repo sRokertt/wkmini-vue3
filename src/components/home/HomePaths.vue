@@ -22,8 +22,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
         </div>
         <TabsList>
           <TabsTrigger value="ml">机器学习</TabsTrigger>
-          <TabsTrigger value="cs">计算机基础</TabsTrigger>
-          <TabsTrigger value="math">数学强化</TabsTrigger>
+          <TabsTrigger value="eng">工程化</TabsTrigger>
+          <TabsTrigger value="math">数学基础</TabsTrigger>
         </TabsList>
       </div>
       <TabsContent value="ml" class="mt-6">
@@ -60,34 +60,34 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
           </Card>
         </div>
       </TabsContent>
-      <TabsContent value="cs" class="mt-6">
+      <TabsContent value="eng" class="mt-6">
         <div class="grid gap-4 md:grid-cols-2">
           <Card class="border-slate-200">
             <CardHeader>
               <CardTitle>计算机基础打底</CardTitle>
-              <CardDescription>数据结构 + 操作系统</CardDescription>
+              <CardDescription>数据结构 + 系统设计</CardDescription>
             </CardHeader>
             <CardContent>
-              <p class="text-sm text-slate-600">为后续系统设计与工程实践服务。</p>
+              <p class="text-sm text-slate-600">强化工程能力与交付思维。</p>
             </CardContent>
             <CardFooter class="flex items-center justify-between">
               <Badge variant="outline">8 周</Badge>
-              <router-link to="/paths/3">
+              <router-link to="/paths/2">
                 <Button variant="outline" size="sm">查看详情</Button>
               </router-link>
             </CardFooter>
           </Card>
           <Card class="border-slate-200">
             <CardHeader>
-              <CardTitle>工程化思维</CardTitle>
-              <CardDescription>测试、部署与性能优化</CardDescription>
+              <CardTitle>系统化交付路线</CardTitle>
+              <CardDescription>性能 + 可靠性 + 可观测性</CardDescription>
             </CardHeader>
             <CardContent>
-              <p class="text-sm text-slate-600">从个人项目过渡到可靠交付。</p>
+              <p class="text-sm text-slate-600">从个人项目走向生产级交付。</p>
             </CardContent>
             <CardFooter class="flex items-center justify-between">
-              <Badge variant="outline">6 周</Badge>
-              <router-link to="/paths/4">
+              <Badge variant="outline">8 周</Badge>
+              <router-link to="/paths/6">
                 <Button variant="outline" size="sm">查看详情</Button>
               </router-link>
             </CardFooter>

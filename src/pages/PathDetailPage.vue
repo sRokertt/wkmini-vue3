@@ -25,7 +25,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
             <Badge variant="outline">评估指标</Badge>
           </div>
           <div class="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
-            <Button class="bg-slate-900 text-white hover:bg-slate-800">开始路径</Button>
+            <Button class="bg-slate-900 text-white hover:bg-slate-800">开始学习路径</Button>
             <Button variant="outline">收藏路径</Button>
             <Button variant="outline" @click="$router.push('/paths')">返回路径列表</Button>
           </div>
@@ -86,15 +86,15 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
           <CardContent class="space-y-3 text-sm text-slate-600">
             <div class="flex items-center justify-between rounded-xl border border-slate-200/70 bg-white/80 px-4 py-3">
               <span>线性代数快速入门</span>
-              <Button variant="ghost" size="sm" @click="$router.push('/courses/1')">进入</Button>
+              <Button variant="outline" size="sm" @click="$router.push('/courses/1')">进入</Button>
             </div>
             <div class="flex items-center justify-between rounded-xl border border-slate-200/70 bg-white/80 px-4 py-3">
               <span>概率与统计</span>
-              <Button variant="ghost" size="sm" @click="$router.push('/courses/2')">进入</Button>
+              <Button variant="outline" size="sm" @click="$router.push('/courses/2')">进入</Button>
             </div>
             <div class="flex items-center justify-between rounded-xl border border-slate-200/70 bg-white/80 px-4 py-3">
               <span>机器学习基础</span>
-              <Button variant="ghost" size="sm" @click="$router.push('/courses/3')">进入</Button>
+              <Button variant="outline" size="sm" @click="$router.push('/courses/3')">进入</Button>
             </div>
           </CardContent>
         </Card>

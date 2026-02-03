@@ -11,13 +11,15 @@ defineProps({
 </script>
 
 <template>
-  <main class="min-h-screen bg-[#f7f5f1] text-slate-900">
+  <main class="flex min-h-screen flex-col bg-[#f7f5f1] text-slate-900">
     <div :class="['mx-auto', maxWidth, 'px-6', 'py-12']">
       <div class="mb-8">
         <AppHeader />
       </div>
       <slot />
     </div>
-    <AppFooter />
+    <div class="mt-auto">
+      <AppFooter />
+    </div>
   </main>
 </template>

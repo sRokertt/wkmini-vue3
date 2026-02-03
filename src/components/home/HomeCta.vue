@@ -7,9 +7,9 @@ import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from '@/comp
   <section class="mt-14">
     <Card class="border-slate-200/80 bg-slate-900 text-white">
       <CardHeader>
-        <CardTitle>准备好开始了吗？</CardTitle>
+      <CardTitle>准备开始系统学习了吗？</CardTitle>
         <CardDescription class="text-slate-200">
-          用清晰结构推进每一次学习。你只需要坚持执行。
+          以明确目标与可执行路径推进学习进度。
         </CardDescription>
       </CardHeader>
       <CardFooter class="flex flex-col gap-3 sm:flex-row sm:items-center">
