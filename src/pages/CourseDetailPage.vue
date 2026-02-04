@@ -1,11 +1,58 @@
 <script setup>
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
+import { useStorage } from '@vueuse/core'
+import { useRoute } from 'vue-router'
 import BasePage from '@/components/layout/BasePage.vue'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 
 const isFavorited = ref(false)
+
+const route = useRoute()
+
+const courses = {
+  1: {
+    title: '线性代数快速入门',
+    level: '进阶',
+    chapters: 12,
+    description: '聚焦向量、矩阵与线性变换的核心概念，配合推导与练习题，建立可靠的数学直觉。',
+    tags: ['数学基础', '机器学习前置', '可视化推导'],
+    duration: '8 小时',
+    audience: '准备进入机器学习/数据科学方向的学习者',
+    advice: '每周 2-3 课时，配合笔记与练习',
+    highlights: '几何直观 + 推导并重',
+    readiness: '高中数学基础即可',
+    outcome: '完成核心概念卡片',
+    keyTopics: ['向量与空间', '矩阵与线性变换', '特征值与分解'],
+    learningWays: ['例题推导 + 课堂练习', '每节课 1 份要点笔记', '章节复盘与概念卡片'],
+    lessonItems: [
+      { id: 1, title: '向量与空间', duration: '20 分钟' },
+      { id: 2, title: '矩阵与线性变换', duration: '35 分钟' },
+      { id: 3, title: '特征值与分解', duration: '40 分钟' },
+    ],
+    recommended: [
+      { title: '公式速查卡', desc: '常用矩阵运算' },
+      { title: '练习题集', desc: '含答案解析' },
+      { title: '可视化讲义', desc: '图示与动画' },
+    ],
+  },
+}
+
+const courseId = computed(() => Number(route.params.id || 1))
+const course = computed(() => courses[courseId.value] || courses[1])
+
+const completedLessonIds = useStorage('wkmini-lesson-completed', [1])
+const currentLessonStorage = useStorage('wkmini-lesson-current', 2)
+
+const totalChapters = computed(() => course.value.lessonItems.length)
+const currentLessonId = computed(() => currentLessonStorage.value)
+const currentLessonLabel = computed(() => {
+  const current = course.value.lessonItems.find((lesson) => lesson.id === currentLessonId.value)
+  if (!current) return '2. 矩阵与线性变换'
+  return `${current.id}. ${current.title}`
+})
+const completedCount = computed(() => completedLessonIds.value.length)
 
 const toggleFavorite = () => {
   isFavorited.value = !isFavorited.value
@@ -18,20 +65,18 @@ const toggleFavorite = () => {
         <div class="rounded-3xl border border-white/80 bg-white/70 p-8 shadow-[0_24px_60px_-40px_rgba(15,23,42,0.35)] backdrop-blur">
           <div class="flex flex-wrap items-center gap-3">
             <Badge class="bg-slate-900 text-white">课程详情</Badge>
-            <Badge variant="outline" class="border-amber-300/60 bg-amber-50 text-amber-700">进阶</Badge>
-            <Badge variant="outline" class="border-slate-200 bg-white/70">12 章节</Badge>
+            <Badge variant="outline" class="border-amber-300/60 bg-amber-50 text-amber-700">{{ course.level }}</Badge>
+            <Badge variant="outline" class="border-slate-200 bg-white/70">{{ totalChapters }} 章节</Badge>
           </div>
-          <h1 class="mt-5 text-3xl font-semibold">线性代数快速入门</h1>
+          <h1 class="mt-5 text-3xl font-semibold">{{ course.title }}</h1>
           <p class="mt-3 text-sm text-slate-600">
-            聚焦向量、矩阵与线性变换的核心概念，配合推导与练习题，建立可靠的数学直觉。
+            {{ course.description }}
           </p>
           <div class="mt-6 flex flex-wrap gap-3 text-xs text-slate-500">
-            <Badge variant="outline">数学基础</Badge>
-            <Badge variant="outline">机器学习前置</Badge>
-            <Badge variant="outline">可视化推导</Badge>
+            <Badge v-for="tag in course.tags" :key="tag" variant="outline">{{ tag }}</Badge>
           </div>
           <div class="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
-            <router-link to="/courses/1/chapters">
+            <router-link :to="`/courses/${courseId}/chapters`">
               <Button variant="outline">查看章节目录</Button>
             </router-link>
             <Button
@@ -45,29 +90,25 @@ const toggleFavorite = () => {
           <div class="mt-8 grid gap-4 md:grid-cols-3">
             <div class="rounded-2xl border border-slate-200/70 bg-white/80 p-4">
               <p class="text-xs font-medium text-slate-500">课程亮点</p>
-              <p class="mt-2 text-sm text-slate-700">几何直观 + 推导并重</p>
+              <p class="mt-2 text-sm text-slate-700">{{ course.highlights }}</p>
             </div>
             <div class="rounded-2xl border border-slate-200/70 bg-white/80 p-4">
               <p class="text-xs font-medium text-slate-500">学习准备</p>
-              <p class="mt-2 text-sm text-slate-700">高中数学基础即可</p>
+              <p class="mt-2 text-sm text-slate-700">{{ course.readiness }}</p>
             </div>
             <div class="rounded-2xl border border-slate-200/70 bg-white/80 p-4">
               <p class="text-xs font-medium text-slate-500">学习产出</p>
-              <p class="mt-2 text-sm text-slate-700">完成核心概念卡片</p>
+              <p class="mt-2 text-sm text-slate-700">{{ course.outcome }}</p>
             </div>
           </div>
           <div class="mt-6 rounded-2xl border border-slate-200/70 bg-white/80 p-4">
             <p class="text-xs font-medium text-slate-500">关键章节与学习方式</p>
             <div class="mt-3 grid gap-4 md:grid-cols-2">
               <ul class="space-y-1 text-sm text-slate-700">
-                <li>• 向量与空间</li>
-                <li>• 矩阵与线性变换</li>
-                <li>• 特征值与分解</li>
+                <li v-for="topic in course.keyTopics" :key="topic">• {{ topic }}</li>
               </ul>
               <ul class="space-y-1 text-sm text-slate-700">
-                <li>• 例题推导 + 课堂练习</li>
-                <li>• 每节课 1 份要点笔记</li>
-                <li>• 章节复盘与概念卡片</li>
+                <li v-for="way in course.learningWays" :key="way">• {{ way }}</li>
               </ul>
             </div>
           </div>
@@ -82,12 +123,12 @@ const toggleFavorite = () => {
             <CardContent class="space-y-3 text-sm text-slate-600">
               <div class="rounded-2xl border border-slate-200/70 bg-white/80 p-4">
                 <p class="text-xs text-slate-500">上次学习到</p>
-                <p class="mt-2 text-base font-semibold text-slate-900">2. 矩阵与线性变换</p>
-                <p class="mt-2 text-xs text-slate-500">已完成 2/12 章节</p>
+                <p class="mt-2 text-base font-semibold text-slate-900">{{ currentLessonLabel }}</p>
+                <p class="mt-2 text-xs text-slate-500">已完成 {{ completedCount }}/{{ totalChapters }} 章节</p>
               </div>
             </CardContent>
             <CardFooter>
-              <router-link class="w-full" to="/lessons/2">
+              <router-link class="w-full" :to="`/lessons/${currentLessonId}`">
                 <Button class="w-full bg-slate-900 text-white hover:bg-slate-800">继续学习</Button>
               </router-link>
             </CardFooter>
@@ -100,19 +141,19 @@ const toggleFavorite = () => {
             <CardContent class="space-y-4 text-sm text-slate-600">
               <div>
                 <p class="text-xs text-slate-500">预计时长</p>
-                <p class="mt-1 text-lg font-semibold text-slate-900">8 小时</p>
+              <p class="mt-1 text-lg font-semibold text-slate-900">{{ course.duration }}</p>
               </div>
               <div>
                 <p class="text-xs text-slate-500">适合人群</p>
-                <p class="mt-1">准备进入机器学习/数据科学方向的学习者</p>
+              <p class="mt-1">{{ course.audience }}</p>
               </div>
               <div>
                 <p class="text-xs text-slate-500">学习建议</p>
-                <p class="mt-1">每周 2-3 课时，配合笔记与练习</p>
+              <p class="mt-1">{{ course.advice }}</p>
               </div>
             </CardContent>
             <CardFooter>
-              <router-link class="w-full" to="/courses/1/plan">
+              <router-link class="w-full" :to="`/courses/${courseId}/plan`">
                 <Button variant="outline" class="w-full">查看学习计划</Button>
               </router-link>
             </CardFooter>
@@ -139,25 +180,13 @@ const toggleFavorite = () => {
           </CardHeader>
           <CardContent class="space-y-3 text-sm text-slate-600">
             <router-link
+              v-for="lesson in course.lessonItems"
+              :key="lesson.id"
               class="flex items-center justify-between rounded-xl border border-slate-200/70 bg-white/80 px-4 py-3 text-slate-700 hover:border-slate-300"
-              to="/lessons/1"
+              :to="`/lessons/${lesson.id}`"
             >
-              <span>1. 向量与空间</span>
-              <span class="text-xs text-slate-400">20 分钟</span>
-            </router-link>
-            <router-link
-              class="flex items-center justify-between rounded-xl border border-slate-200/70 bg-white/80 px-4 py-3 text-slate-700 hover:border-slate-300"
-              to="/lessons/2"
-            >
-              <span>2. 矩阵与线性变换</span>
-              <span class="text-xs text-slate-400">35 分钟</span>
-            </router-link>
-            <router-link
-              class="flex items-center justify-between rounded-xl border border-slate-200/70 bg-white/80 px-4 py-3 text-slate-700 hover:border-slate-300"
-              to="/lessons/3"
-            >
-              <span>3. 特征值与分解</span>
-              <span class="text-xs text-slate-400">40 分钟</span>
+              <span>{{ lesson.id }}. {{ lesson.title }}</span>
+              <span class="text-xs text-slate-400">{{ lesson.duration }}</span>
             </router-link>
           </CardContent>
         </Card>
@@ -170,17 +199,14 @@ const toggleFavorite = () => {
             <CardDescription>课程配套内容</CardDescription>
           </CardHeader>
           <CardContent class="grid gap-4 md:grid-cols-3">
-            <router-link class="rounded-2xl border border-slate-200/70 bg-white/80 p-4 hover:border-slate-300" to="/library">
-              <p class="text-sm font-medium">公式速查卡</p>
-              <p class="mt-2 text-xs text-slate-500">常用矩阵运算</p>
-            </router-link>
-            <router-link class="rounded-2xl border border-slate-200/70 bg-white/80 p-4 hover:border-slate-300" to="/library">
-              <p class="text-sm font-medium">练习题集</p>
-              <p class="mt-2 text-xs text-slate-500">含答案解析</p>
-            </router-link>
-            <router-link class="rounded-2xl border border-slate-200/70 bg-white/80 p-4 hover:border-slate-300" to="/library">
-              <p class="text-sm font-medium">可视化讲义</p>
-              <p class="mt-2 text-xs text-slate-500">图示与动画</p>
+            <router-link
+              v-for="item in course.recommended"
+              :key="item.title"
+              class="rounded-2xl border border-slate-200/70 bg-white/80 p-4 hover:border-slate-300"
+              to="/library"
+            >
+              <p class="text-sm font-medium">{{ item.title }}</p>
+              <p class="mt-2 text-xs text-slate-500">{{ item.desc }}</p>
             </router-link>
           </CardContent>
         </Card>

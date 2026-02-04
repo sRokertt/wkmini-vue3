@@ -1,10 +1,23 @@
 <script setup>
 import { computed } from 'vue'
 import { useStorage } from '@vueuse/core'
+import { useRoute } from 'vue-router'
 import BasePage from '@/components/layout/BasePage.vue'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+
+const route = useRoute()
+
+const courses = {
+  1: {
+    title: '线性代数快速入门',
+    chapters: 12,
+  },
+}
+
+const courseId = computed(() => Number(route.params.id || 1))
+const course = computed(() => courses[courseId.value] || courses[1])
 
 const chapters = [
   { id: 1, title: '向量与空间', duration: '20 分钟' },
@@ -13,10 +26,10 @@ const chapters = [
 ]
 
 const completedLessonIds = useStorage('wkmini-lesson-completed', [1])
-const nextLessonId = computed(() => {
-  const sorted = [...completedLessonIds.value].sort((a, b) => a - b)
-  const lastCompleted = sorted[sorted.length - 1] || 0
-  return lastCompleted + 1
+const currentLessonStorage = useStorage('wkmini-lesson-current', 2)
+const startLesson = computed(() => {
+  const current = chapters.find((chapter) => chapter.id === currentLessonStorage.value)
+  return current || chapters[0]
 })
 
 const statusMap = {
@@ -27,7 +40,7 @@ const statusMap = {
 
 const getStatus = (chapterId) => {
   if (completedLessonIds.value.includes(chapterId)) return statusMap.done
-  if (chapterId === nextLessonId.value) return statusMap.current
+  if (chapterId === currentLessonStorage.value) return statusMap.current
   return statusMap.todo
 }
 </script>
@@ -38,17 +51,18 @@ const getStatus = (chapterId) => {
       <div class="rounded-3xl border border-white/80 bg-white/70 p-8 shadow-[0_24px_60px_-40px_rgba(15,23,42,0.35)] backdrop-blur">
         <div class="flex flex-wrap items-center gap-3">
           <Badge class="bg-slate-900 text-white">章节目录</Badge>
-          <Badge variant="outline" class="border-amber-300/60 bg-amber-50 text-amber-700">线性代数快速入门</Badge>
-          <Badge variant="outline" class="border-slate-200 bg-white/70">12 章节</Badge>
+          <Badge variant="outline" class="border-amber-300/60 bg-amber-50 text-amber-700">{{ course.title }}</Badge>
+          <Badge variant="outline" class="border-slate-200 bg-white/70">{{ course.chapters }} 章节</Badge>
         </div>
         <h1 class="mt-5 text-3xl font-semibold">课程章节目录</h1>
         <p class="mt-3 text-sm text-slate-600">集中查看所有章节并直接进入学习。</p>
+        <p class="mt-2 text-xs text-slate-500">上次学习到：{{ startLesson.title }}</p>
         <div class="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
-          <router-link to="/courses/1">
+          <router-link :to="`/courses/${courseId}`">
             <Button variant="outline">返回课程详情</Button>
           </router-link>
-          <router-link to="/lessons/1">
-            <Button class="bg-slate-900 text-white hover:bg-slate-800">开始第一节</Button>
+          <router-link :to="`/lessons/${startLesson.id}`">
+            <Button class="bg-slate-900 text-white hover:bg-slate-800">继续学习</Button>
           </router-link>
         </div>
       </div>

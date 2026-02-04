@@ -1,5 +1,5 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useStorage } from '@vueuse/core'
 import MarkdownIt from 'markdown-it'
@@ -18,6 +18,7 @@ const lessons = [
 ]
 
 const completedLessonIds = useStorage('wkmini-lesson-completed', [1])
+const currentLessonStorage = useStorage('wkmini-lesson-current', 2)
 
 const statusMap = {
   done: { label: '已完成', className: 'border-emerald-200/70 text-emerald-600' },
@@ -44,6 +45,10 @@ const toggleCompleted = () => {
   }
   completedLessonIds.value = [...completedLessonIds.value, currentLessonId.value]
 }
+
+watch(currentLessonId, (value) => {
+  currentLessonStorage.value = value
+})
 
 const getStatus = (lessonId) => {
   if (lessonId === currentLessonId.value) return statusMap.current
