@@ -18,14 +18,6 @@ import { Input } from '@/components/ui/input'
     <p class="mt-4 text-base leading-relaxed text-slate-600 md:text-lg">
       围绕课程-章节-文章构建清晰学习路径，提供可复用资料与节奏追踪，让学习目标可执行、可复盘。
     </p>
-    <div class="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
-      <div class="flex-1">
-        <Input class="bg-white/80" placeholder="搜索课程、章节、关键词" />
-      </div>
-      <router-link class="w-full sm:w-auto" to="/search">
-        <Button class="w-full bg-slate-900 text-white hover:bg-slate-800">搜索</Button>
-      </router-link>
-    </div>
     <div class="mt-6 grid gap-3 sm:grid-cols-3">
       <div class="rounded-2xl border border-slate-200/70 bg-white/80 p-4">
         <p class="text-xs font-medium text-slate-500">重点覆盖</p>
