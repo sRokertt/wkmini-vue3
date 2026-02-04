@@ -1,99 +1,51 @@
 <script setup>
 import { computed, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { useStorage } from '@vueuse/core'
 import MarkdownIt from 'markdown-it'
 import BasePage from '@/components/layout/BasePage.vue'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
+import { useCourseStore } from '@/stores/courseStore'
+import { useProgressStore } from '@/stores/progressStore'
 
 const route = useRoute()
 const router = useRouter()
 
-const lessons = [
-  { id: 1, title: '向量与空间', duration: '20 分钟' },
-  { id: 2, title: '矩阵与线性变换', duration: '35 分钟' },
-  { id: 3, title: '特征值与分解', duration: '40 分钟' },
-]
+const courseStore = useCourseStore()
+const course = computed(() => courseStore.getCourseById(1))
+const lessons = computed(() => course.value.lessonItems || [])
 
-const completedLessonIds = useStorage('wkmini-lesson-completed', [1])
-const currentLessonStorage = useStorage('wkmini-lesson-current', 2)
-
-const statusMap = {
-  done: { label: '已完成', className: 'border-emerald-200/70 text-emerald-600' },
-  current: { label: '进行中', className: 'border-amber-200/70 text-amber-600' },
-  todo: { label: '未开始', className: 'border-slate-200/70 text-slate-400' },
-}
+const progressStore = useProgressStore()
 
 const currentLessonId = computed(() => Number(route.params.id || 2))
-const currentIndex = computed(() => lessons.findIndex((lesson) => lesson.id === currentLessonId.value))
-const currentLesson = computed(() => lessons[currentIndex.value] || lessons[1])
-const prevLesson = computed(() => lessons[currentIndex.value - 1])
-const nextLesson = computed(() => lessons[currentIndex.value + 1])
+const currentIndex = computed(() => lessons.value.findIndex((lesson) => lesson.id === currentLessonId.value))
+const currentLesson = computed(() => lessons.value[currentIndex.value] || lessons.value[0])
+const prevLesson = computed(() => lessons.value[currentIndex.value - 1])
+const nextLesson = computed(() => lessons.value[currentIndex.value + 1])
 
 const goToLesson = (lessonId) => {
   router.push(`/lessons/${lessonId}`)
 }
 
-const isCompleted = computed(() => completedLessonIds.value.includes(currentLessonId.value))
+const isCompleted = computed(() => progressStore.isCompleted(currentLessonId.value))
 
 const toggleCompleted = () => {
-  if (completedLessonIds.value.includes(currentLessonId.value)) {
-    completedLessonIds.value = completedLessonIds.value.filter((id) => id !== currentLessonId.value)
-    return
-  }
-  completedLessonIds.value = [...completedLessonIds.value, currentLessonId.value]
+  progressStore.toggleCompleted(currentLessonId.value)
 }
 
 watch(currentLessonId, (value) => {
-  currentLessonStorage.value = value
+  progressStore.setCurrentLesson(value)
 })
 
-const getStatus = (lessonId) => {
-  if (lessonId === currentLessonId.value) return statusMap.current
-  if (completedLessonIds.value.includes(lessonId)) return statusMap.done
-  return statusMap.todo
-}
+const getStatus = (lessonId) => progressStore.getStatus(lessonId)
 
 const md = new MarkdownIt({
   html: false,
   linkify: true,
 })
-
-const lessonMarkdown = `## 核心概念
-矩阵可以看作线性变换的编码方式。理解“对标准基的作用”是最直接的路径。
-
-- 线性变换保持向量加法与数乘结构
-- 矩阵列向量描述基向量的变换结果
-- 矩阵乘法对应变换复合
-
-## 示例与练习
-尝试用一个 2x2 矩阵描述旋转与缩放，并观察其对单位正方形的影响。
-
-> 练习：构造一个先缩放再旋转的矩阵，并解释复合顺序。
-
-## 示例代码
-
-\`\`\`js
-// 向量 x 经过矩阵 A 变换
-const A = [
-  [2, 0],
-  [0, 1],
-]
-
-const x = [1, 2]
-const y = [
-  A[0][0] * x[0] + A[0][1] * x[1],
-  A[1][0] * x[0] + A[1][1] * x[1],
-]
-// y = [2, 2]
-\`\`\`
-
-## 要点小结
-矩阵的列向量是理解线性变换的关键。掌握它能帮助你更快理解特征值与分解。`
-
-const renderedMarkdown = md.render(lessonMarkdown)
+const lessonMarkdown = computed(() => currentLesson.value?.content || '')
+const renderedMarkdown = computed(() => md.render(lessonMarkdown.value))
 </script>
 
 <template>

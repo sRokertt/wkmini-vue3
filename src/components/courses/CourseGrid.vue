@@ -15,6 +15,13 @@ defineProps({
 })
 
 const emit = defineEmits(['enter'])
+
+const formatChapters = (chapters) => {
+  if (typeof chapters === 'number') {
+    return `${chapters} 章节`
+  }
+  return chapters
+}
 </script>
 
 <template>
@@ -28,7 +35,7 @@ const emit = defineEmits(['enter'])
         <p class="text-sm text-slate-600">{{ course.description }}</p>
       </CardContent>
       <CardFooter class="flex items-center justify-between">
-        <Badge variant="outline">{{ course.chapters }}</Badge>
+        <Badge variant="outline">{{ formatChapters(course.chapters) }}</Badge>
         <Button variant="outline" size="sm" @click="emit('enter', course.id)">进入</Button>
       </CardFooter>
     </Card>

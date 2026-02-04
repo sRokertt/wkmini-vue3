@@ -1,61 +1,33 @@
 <script setup>
-import { computed, ref } from 'vue'
-import { useStorage } from '@vueuse/core'
+import { computed } from 'vue'
 import { useRoute } from 'vue-router'
+import { useCourseStore } from '@/stores/courseStore'
+import { useProgressStore } from '@/stores/progressStore'
 import BasePage from '@/components/layout/BasePage.vue'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 
-const isFavorited = ref(false)
-
 const route = useRoute()
 
-const courses = {
-  1: {
-    title: '线性代数快速入门',
-    level: '进阶',
-    chapters: 12,
-    description: '聚焦向量、矩阵与线性变换的核心概念，配合推导与练习题，建立可靠的数学直觉。',
-    tags: ['数学基础', '机器学习前置', '可视化推导'],
-    duration: '8 小时',
-    audience: '准备进入机器学习/数据科学方向的学习者',
-    advice: '每周 2-3 课时，配合笔记与练习',
-    highlights: '几何直观 + 推导并重',
-    readiness: '高中数学基础即可',
-    outcome: '完成核心概念卡片',
-    keyTopics: ['向量与空间', '矩阵与线性变换', '特征值与分解'],
-    learningWays: ['例题推导 + 课堂练习', '每节课 1 份要点笔记', '章节复盘与概念卡片'],
-    lessonItems: [
-      { id: 1, title: '向量与空间', duration: '20 分钟' },
-      { id: 2, title: '矩阵与线性变换', duration: '35 分钟' },
-      { id: 3, title: '特征值与分解', duration: '40 分钟' },
-    ],
-    recommended: [
-      { title: '公式速查卡', desc: '常用矩阵运算' },
-      { title: '练习题集', desc: '含答案解析' },
-      { title: '可视化讲义', desc: '图示与动画' },
-    ],
-  },
-}
-
 const courseId = computed(() => Number(route.params.id || 1))
-const course = computed(() => courses[courseId.value] || courses[1])
+const courseStore = useCourseStore()
+const course = computed(() => courseStore.getCourseById(courseId.value))
+const isFavorited = computed(() => courseStore.isFavorited(courseId.value))
 
-const completedLessonIds = useStorage('wkmini-lesson-completed', [1])
-const currentLessonStorage = useStorage('wkmini-lesson-current', 2)
+const progressStore = useProgressStore()
 
 const totalChapters = computed(() => course.value.lessonItems.length)
-const currentLessonId = computed(() => currentLessonStorage.value)
+const currentLessonId = computed(() => progressStore.currentLessonId)
 const currentLessonLabel = computed(() => {
   const current = course.value.lessonItems.find((lesson) => lesson.id === currentLessonId.value)
   if (!current) return '2. 矩阵与线性变换'
   return `${current.id}. ${current.title}`
 })
-const completedCount = computed(() => completedLessonIds.value.length)
+const completedCount = computed(() => progressStore.completedCount)
 
 const toggleFavorite = () => {
-  isFavorited.value = !isFavorited.value
+  courseStore.toggleFavorite(courseId.value)
 }
 </script>
 

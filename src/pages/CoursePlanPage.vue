@@ -5,6 +5,8 @@ import BasePage from '@/components/layout/BasePage.vue'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
+import { useCourseStore } from '@/stores/courseStore'
+import { useCalendarStore } from '@/stores/calendarStore'
 import {
   Dialog,
   DialogClose,
@@ -18,75 +20,16 @@ import {
 
 const route = useRoute()
 
-const courses = {
-  1: {
-    title: '线性代数快速入门',
-    duration: '8 小时',
-    planSummary: '聚焦向量、矩阵、线性变换与特征值，拆解为可执行节奏，适合 2-3 周完成。',
-    planWeeks: [
-      {
-        title: '第 1 周',
-        description: '向量与线性空间',
-        items: ['课程 1-2：向量、基与线性无关', '练习：投影、线性组合与子空间判定'],
-      },
-      {
-        title: '第 2 周',
-        description: '矩阵与线性变换',
-        items: ['课程 3-4：矩阵运算与线性方程组', '练习：线性变换的几何意义与可逆性'],
-      },
-      {
-        title: '第 3 周',
-        description: '特征值与分解',
-        items: ['课程 5-6：特征值、对角化、SVD', '练习：PCA 直觉与降维应用'],
-      },
-    ],
-    outcomes: [
-      '一份线性代数核心概念与公式卡片',
-      '3-5 道典型题的推导与解析',
-      '线性回归/PCA 的线代表达笔记',
-    ],
-  },
-}
-
 const courseId = computed(() => Number(route.params.id || 1))
-const course = computed(() => courses[courseId.value] || courses[1])
+const courseStore = useCourseStore()
+const course = computed(() => courseStore.getCourseById(courseId.value))
 
 const calendarWeekdays = ['日', '一', '二', '三', '四', '五', '六']
 const today = new Date()
 const activeMonth = ref(new Date(today.getFullYear(), today.getMonth(), 1))
 const selectedDate = ref(new Date(today.getFullYear(), today.getMonth(), today.getDate()))
 const isDialogOpen = ref(false)
-const memoStoreKey = 'wkmini-calendar-memo'
-const planStoreKey = 'wkmini-calendar-plan'
-
-const readStorage = (key) => {
-  if (typeof window === 'undefined') {
-    return {}
-  }
-  const raw = window.localStorage.getItem(key)
-  if (!raw) {
-    return {}
-  }
-  try {
-    const parsed = JSON.parse(raw)
-    if (parsed && typeof parsed === 'object') {
-      return parsed
-    }
-  } catch (error) {
-    return {}
-  }
-  return {}
-}
-
-const writeStorage = (key, value) => {
-  if (typeof window === 'undefined') {
-    return
-  }
-  window.localStorage.setItem(key, JSON.stringify(value))
-}
-
-const memoByDate = ref(readStorage(memoStoreKey))
-const planByDate = ref(readStorage(planStoreKey))
+const calendarStore = useCalendarStore()
 
 const calendarYear = computed(() => activeMonth.value.getFullYear())
 const calendarMonth = computed(() => activeMonth.value.getMonth())
@@ -118,20 +61,29 @@ const selectedLabel = computed(() => {
 })
 
 const memoText = computed({
-  get: () => memoByDate.value[selectedKey.value] || '',
+  get: () => calendarStore.getMemo(selectedKey.value),
   set: (value) => {
-    memoByDate.value = { ...memoByDate.value, [selectedKey.value]: value }
-    writeStorage(memoStoreKey, memoByDate.value)
+    calendarStore.setMemo(selectedKey.value, value)
   },
 })
 
 const planText = computed({
-  get: () => planByDate.value[selectedKey.value] || '',
+  get: () => calendarStore.getPlan(selectedKey.value),
   set: (value) => {
-    planByDate.value = { ...planByDate.value, [selectedKey.value]: value }
-    writeStorage(planStoreKey, planByDate.value)
+    calendarStore.setPlan(selectedKey.value, value)
   },
 })
+
+const hasRecord = (day) => {
+  if (!day) {
+    return false
+  }
+  const year = calendarYear.value
+  const month = String(calendarMonth.value + 1).padStart(2, '0')
+  const dayKey = String(day).padStart(2, '0')
+  const key = `${year}-${month}-${dayKey}`
+  return calendarStore.hasRecord(key)
+}
 
 const isSameMonth = (date) =>
   date.getFullYear() === calendarYear.value && date.getMonth() === calendarMonth.value
@@ -308,7 +260,7 @@ const closeDialog = () => {
               >
                 <span
                   v-if="day"
-                  class="flex h-9 w-9 cursor-pointer items-center justify-center rounded-xl text-xs transition"
+                  class="relative flex h-9 w-9 cursor-pointer items-center justify-center rounded-xl text-xs transition"
                   :class="{
                     'bg-slate-900 text-white': isSelected(day),
                     'bg-slate-100 text-slate-900 hover:bg-slate-200': !isSelected(day),
@@ -318,6 +270,11 @@ const closeDialog = () => {
                   @click="selectDay(day)"
                 >
                   {{ day }}
+                  <span
+                    v-if="hasRecord(day)"
+                    class="absolute bottom-1.5 h-1.5 w-1.5 rounded-full"
+                    :class="isSelected(day) ? 'bg-white' : 'bg-slate-400'"
+                  ></span>
                 </span>
               </div>
             </div>

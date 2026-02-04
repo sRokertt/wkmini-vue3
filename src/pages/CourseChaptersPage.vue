@@ -1,7 +1,8 @@
 <script setup>
 import { computed } from 'vue'
-import { useStorage } from '@vueuse/core'
 import { useRoute } from 'vue-router'
+import { useCourseStore } from '@/stores/courseStore'
+import { useProgressStore } from '@/stores/progressStore'
 import BasePage from '@/components/layout/BasePage.vue'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -9,40 +10,19 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 
 const route = useRoute()
 
-const courses = {
-  1: {
-    title: '线性代数快速入门',
-    chapters: 12,
-  },
-}
-
 const courseId = computed(() => Number(route.params.id || 1))
-const course = computed(() => courses[courseId.value] || courses[1])
+const courseStore = useCourseStore()
+const course = computed(() => courseStore.getCourseById(courseId.value))
+const chapters = computed(() => course.value.lessonItems || [])
+const totalChapters = computed(() => chapters.value.length)
 
-const chapters = [
-  { id: 1, title: '向量与空间', duration: '20 分钟' },
-  { id: 2, title: '矩阵与线性变换', duration: '35 分钟' },
-  { id: 3, title: '特征值与分解', duration: '40 分钟' },
-]
-
-const completedLessonIds = useStorage('wkmini-lesson-completed', [1])
-const currentLessonStorage = useStorage('wkmini-lesson-current', 2)
+const progressStore = useProgressStore()
 const startLesson = computed(() => {
-  const current = chapters.find((chapter) => chapter.id === currentLessonStorage.value)
-  return current || chapters[0]
+  const current = chapters.value.find((chapter) => chapter.id === progressStore.currentLessonId)
+  return current || chapters.value[0]
 })
 
-const statusMap = {
-  done: { label: '已完成', className: 'border-emerald-200/70 text-emerald-600' },
-  current: { label: '进行中', className: 'border-amber-200/70 text-amber-600' },
-  todo: { label: '未开始', className: 'border-slate-200/70 text-slate-400' },
-}
-
-const getStatus = (chapterId) => {
-  if (completedLessonIds.value.includes(chapterId)) return statusMap.done
-  if (chapterId === currentLessonStorage.value) return statusMap.current
-  return statusMap.todo
-}
+const getStatus = (chapterId) => progressStore.getStatus(chapterId)
 </script>
 
 <template>
@@ -52,7 +32,7 @@ const getStatus = (chapterId) => {
         <div class="flex flex-wrap items-center gap-3">
           <Badge class="bg-slate-900 text-white">章节目录</Badge>
           <Badge variant="outline" class="border-amber-300/60 bg-amber-50 text-amber-700">{{ course.title }}</Badge>
-          <Badge variant="outline" class="border-slate-200 bg-white/70">{{ course.chapters }} 章节</Badge>
+          <Badge variant="outline" class="border-slate-200 bg-white/70">{{ totalChapters }} 章节</Badge>
         </div>
         <h1 class="mt-5 text-3xl font-semibold">课程章节目录</h1>
         <p class="mt-3 text-sm text-slate-600">集中查看所有章节并直接进入学习。</p>
