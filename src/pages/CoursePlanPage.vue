@@ -45,7 +45,7 @@ const course = computed(() => courses[courseId.value] || courses[1])
 <template>
   <BasePage>
     <section class="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
-      <div class="rounded-3xl border border-white/80 bg-white/70 p-8 shadow-[0_24px_60px_-40px_rgba(15,23,42,0.35)] backdrop-blur">
+      <div class="flex h-full flex-col rounded-3xl border border-white/80 bg-white/70 p-8 shadow-[0_24px_60px_-40px_rgba(15,23,42,0.35)] backdrop-blur">
         <div class="flex flex-wrap items-center gap-3">
           <Badge class="bg-slate-900 text-white">课程学习计划</Badge>
           <Badge variant="outline" class="border-amber-300/60 bg-amber-50 text-amber-700">{{ course.title }}</Badge>
@@ -55,49 +55,13 @@ const course = computed(() => courses[courseId.value] || courses[1])
         <p class="mt-3 text-sm text-slate-600">
           {{ course.planSummary }}
         </p>
-        <div class="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
+        <div class="mt-auto flex flex-col gap-3 pt-6 sm:flex-row sm:items-center">
           <router-link :to="`/courses/${courseId}`">
             <Button variant="outline">返回课程详情</Button>
           </router-link>
           <router-link to="/lessons/1">
             <Button class="bg-slate-900 text-white hover:bg-slate-800">开始第一课</Button>
           </router-link>
-        </div>
-        <div class="mt-8 grid gap-4 md:grid-cols-3">
-          <div class="rounded-2xl border border-slate-200/70 bg-white/80 p-4">
-            <p class="text-xs text-slate-500">总周期</p>
-            <p class="mt-2 text-base font-semibold text-slate-900">2-3 周</p>
-          </div>
-          <div class="rounded-2xl border border-slate-200/70 bg-white/80 p-4">
-            <p class="text-xs text-slate-500">每周安排</p>
-            <p class="mt-2 text-sm text-slate-700">2 次学习 + 1 次习题推导</p>
-          </div>
-          <div class="rounded-2xl border border-slate-200/70 bg-white/80 p-4">
-            <p class="text-xs text-slate-500">配套动作</p>
-            <p class="mt-2 text-sm text-slate-700">每节课输出 1 份公式与概念小结</p>
-          </div>
-        </div>
-        <div class="mt-8 grid gap-4 md:grid-cols-3">
-          <Card v-for="week in course.planWeeks" :key="week.title" class="border-slate-200/80 bg-white/80">
-            <CardHeader>
-              <CardTitle>{{ week.title }}</CardTitle>
-              <CardDescription>{{ week.description }}</CardDescription>
-            </CardHeader>
-            <CardContent class="space-y-2 text-sm text-slate-600">
-              <p v-for="item in week.items" :key="item">• {{ item }}</p>
-            </CardContent>
-          </Card>
-        </div>
-        <div class="mt-8">
-          <Card class="border-slate-200/80 bg-white/80">
-            <CardHeader>
-              <CardTitle>本课程产出</CardTitle>
-              <CardDescription>完成后可交付的成果</CardDescription>
-            </CardHeader>
-            <CardContent class="space-y-2 text-sm text-slate-600">
-              <p v-for="item in course.outcomes" :key="item">• {{ item }}</p>
-            </CardContent>
-          </Card>
         </div>
       </div>
 
@@ -118,11 +82,56 @@ const course = computed(() => courses[courseId.value] || courses[1])
             </div>
           </div>
         </CardContent>
-        <CardFooter>
+        <CardFooter class="pt-0 px-4 pb-4">
           <router-link class="w-full" to="/paths/1">
-            <Button variant="outline" class="w-full">查看路线详情</Button>
+            <Button class="w-full bg-slate-900 text-white hover:bg-slate-800">查看路线详情</Button>
           </router-link>
         </CardFooter>
+      </Card>
+    </section>
+
+    <section class="mt-10">
+      <Card class="border-slate-200/80 bg-white/80">
+        <CardHeader>
+          <CardTitle>学习节奏与周计划</CardTitle>
+          <CardDescription>将学习安排拆成可执行节奏</CardDescription>
+        </CardHeader>
+        <CardContent class="space-y-6">
+          <div class="grid gap-4 md:grid-cols-3">
+            <div class="rounded-2xl border border-slate-200/70 bg-white/80 p-4">
+              <p class="text-xs text-slate-500">总周期</p>
+              <p class="mt-2 text-base font-semibold text-slate-900">2-3 周</p>
+            </div>
+            <div class="rounded-2xl border border-slate-200/70 bg-white/80 p-4">
+              <p class="text-xs text-slate-500">每周安排</p>
+              <p class="mt-2 text-sm text-slate-700">2 次学习 + 1 次习题推导</p>
+            </div>
+            <div class="rounded-2xl border border-slate-200/70 bg-white/80 p-4">
+              <p class="text-xs text-slate-500">配套动作</p>
+              <p class="mt-2 text-sm text-slate-700">每节课输出 1 份公式与概念小结</p>
+            </div>
+          </div>
+          <div class="grid gap-4 md:grid-cols-3">
+            <Card v-for="week in course.planWeeks" :key="week.title" class="border-slate-200/80 bg-white/80">
+              <CardHeader>
+                <CardTitle>{{ week.title }}</CardTitle>
+                <CardDescription>{{ week.description }}</CardDescription>
+              </CardHeader>
+              <CardContent class="space-y-2 text-sm text-slate-600">
+                <p v-for="item in week.items" :key="item">• {{ item }}</p>
+              </CardContent>
+            </Card>
+          </div>
+          <Card class="border-slate-200/80 bg-white/80">
+            <CardHeader>
+              <CardTitle>本课程产出</CardTitle>
+              <CardDescription>完成后可交付的成果</CardDescription>
+            </CardHeader>
+            <CardContent class="space-y-2 text-sm text-slate-600">
+              <p v-for="item in course.outcomes" :key="item">• {{ item }}</p>
+            </CardContent>
+          </Card>
+        </CardContent>
       </Card>
     </section>
 
@@ -154,7 +163,7 @@ const course = computed(() => courses[courseId.value] || courses[1])
             <p class="mt-2 text-sm text-slate-700">例如：周末完成特征值章节练习</p>
           </div>
         </CardContent>
-        <CardFooter>
+        <CardFooter class="px-4 pb-4">
           <Button class="w-full bg-slate-900 text-white hover:bg-slate-800">添加备忘录</Button>
         </CardFooter>
       </Card>
