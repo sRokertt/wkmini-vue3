@@ -1,8 +1,15 @@
 <script setup>
+import { ref } from 'vue'
 import BasePage from '@/components/layout/BasePage.vue'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
+
+const isFavorited = ref(false)
+
+const toggleFavorite = () => {
+  isFavorited.value = !isFavorited.value
+}
 </script>
 
 <template>
@@ -24,8 +31,16 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
             <Badge variant="outline">可视化推导</Badge>
           </div>
           <div class="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
-            <Button class="bg-slate-900 text-white hover:bg-slate-800" @click="$router.push('/lessons/1')">开始学习</Button>
-            <Button variant="outline">收藏课程</Button>
+            <router-link to="/lessons/1">
+              <Button class="bg-slate-900 text-white hover:bg-slate-800">开始学习</Button>
+            </router-link>
+            <Button
+              :variant="isFavorited ? 'default' : 'outline'"
+              :class="isFavorited ? 'bg-slate-900 text-white hover:bg-slate-800' : ''"
+              @click="toggleFavorite"
+            >
+              {{ isFavorited ? '已收藏' : '收藏课程' }}
+            </Button>
           </div>
         </div>
 
@@ -49,7 +64,9 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
             </div>
           </CardContent>
           <CardFooter>
-            <Button variant="outline" class="w-full">查看学习计划</Button>
+            <router-link class="w-full" to="/courses/1/plan">
+              <Button variant="outline" class="w-full">查看学习计划</Button>
+            </router-link>
           </CardFooter>
         </Card>
     </section>
@@ -104,18 +121,18 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
             <CardDescription>课程配套内容</CardDescription>
           </CardHeader>
           <CardContent class="grid gap-4 md:grid-cols-3">
-            <div class="rounded-2xl border border-slate-200/70 bg-white/80 p-4">
+            <router-link class="rounded-2xl border border-slate-200/70 bg-white/80 p-4 hover:border-slate-300" to="/library">
               <p class="text-sm font-medium">公式速查卡</p>
               <p class="mt-2 text-xs text-slate-500">常用矩阵运算</p>
-            </div>
-            <div class="rounded-2xl border border-slate-200/70 bg-white/80 p-4">
+            </router-link>
+            <router-link class="rounded-2xl border border-slate-200/70 bg-white/80 p-4 hover:border-slate-300" to="/library">
               <p class="text-sm font-medium">练习题集</p>
               <p class="mt-2 text-xs text-slate-500">含答案解析</p>
-            </div>
-            <div class="rounded-2xl border border-slate-200/70 bg-white/80 p-4">
+            </router-link>
+            <router-link class="rounded-2xl border border-slate-200/70 bg-white/80 p-4 hover:border-slate-300" to="/library">
               <p class="text-sm font-medium">可视化讲义</p>
               <p class="mt-2 text-xs text-slate-500">图示与动画</p>
-            </div>
+            </router-link>
           </CardContent>
         </Card>
     </section>
