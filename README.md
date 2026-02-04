@@ -1,23 +1,30 @@
 # wkmini-vue3
 
-This template should help get you started developing with Vue 3 in Vite.
+Demo frontend for the wkmini product. This project uses static data and Pinia stores to simulate a real app without mock.js or backend services.
 
-## Recommended IDE Setup
+## Tech Stack
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+- Vue 3 + Vite
+- Pinia (state management)
+- Vue Router
+- Tailwind CSS
+- tweakcn-style UI components (in `src/components/ui`)
 
-## Recommended Browser Setup
+## Data Architecture
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
+- Static data source: `src/data/courses.js`
+- Pinia stores:
+  - `src/stores/courseStore.js` (courses + favorites)
+  - `src/stores/calendarStore.js` (calendar memos)
+  - `src/stores/progressStore.js` (learning progress)
 
-## Customize configuration
+### Local Storage Keys
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+- `wkmini-calendar-memo`
+- `wkmini-calendar-plan`
+- `wkmini-lesson-completed`
+- `wkmini-lesson-current`
+- `wkmini-course-favorites`
 
 ## Project Setup
 
