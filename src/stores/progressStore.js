@@ -29,6 +29,8 @@ const writeStorage = (key, value) => {
 export const useProgressStore = defineStore('progress', () => {
   const completedLessonIds = ref(readStorage(completedStoreKey, [1]))
   const currentLessonId = ref(readStorage(currentStoreKey, 2))
+  const weeklyLessons = ref(6)
+  const totalHours = ref(28)
 
   const completedCount = computed(() => completedLessonIds.value.length)
 
@@ -64,6 +66,8 @@ export const useProgressStore = defineStore('progress', () => {
   return {
     completedLessonIds,
     currentLessonId,
+    weeklyLessons,
+    totalHours,
     completedCount,
     isCompleted,
     toggleCompleted,

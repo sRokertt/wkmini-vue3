@@ -6,6 +6,14 @@ import LibraryTabs from '@/components/library/LibraryTabs.vue'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { TabsContent } from '@/components/ui/tabs'
+import { computed } from 'vue'
+import { useLibraryStore } from '@/stores/libraryStore'
+
+const libraryStore = useLibraryStore()
+const allItems = computed(() => libraryStore.filteredByCategory('all'))
+const templateItems = computed(() => libraryStore.filteredByCategory('templates'))
+const checklistItems = computed(() => libraryStore.filteredByCategory('checklists'))
+const toolItems = computed(() => libraryStore.filteredByCategory('tools'))
 </script>
 
 <template>
@@ -16,109 +24,13 @@ import { TabsContent } from '@/components/ui/tabs'
       <LibraryTabs default-value="all">
         <TabsContent value="all" class="mt-6">
           <LibraryGrid>
-              <Card class="border-slate-200/80 bg-white/80">
+              <Card v-for="item in allItems" :key="item.id" class="border-slate-200/80 bg-white/80">
                 <CardHeader>
-                  <CardTitle>高频公式卡片</CardTitle>
-                  <CardDescription>快速复习与记忆</CardDescription>
+                  <CardTitle>{{ item.title }}</CardTitle>
+                  <CardDescription>{{ item.description }}</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <p class="text-sm text-slate-600">面向数学与算法常用公式。</p>
-                </CardContent>
-                <CardFooter>
-                  <Button variant="outline" size="sm">进入</Button>
-                </CardFooter>
-              </Card>
-              <Card class="border-slate-200/80 bg-white/80">
-                <CardHeader>
-                  <CardTitle>算法模板库</CardTitle>
-                  <CardDescription>常见解题套路</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p class="text-sm text-slate-600">涵盖图、树、动态规划等。</p>
-                </CardContent>
-                <CardFooter>
-                  <Button variant="outline" size="sm">进入</Button>
-                </CardFooter>
-              </Card>
-              <Card class="border-slate-200/80 bg-white/80">
-                <CardHeader>
-                  <CardTitle>模型评估模板</CardTitle>
-                  <CardDescription>指标与实验记录</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p class="text-sm text-slate-600">用于沉淀实验过程。</p>
-                </CardContent>
-                <CardFooter>
-                  <Button variant="outline" size="sm">进入</Button>
-                </CardFooter>
-              </Card>
-              <Card class="border-slate-200/80 bg-white/80">
-                <CardHeader>
-                  <CardTitle>项目实践清单</CardTitle>
-                  <CardDescription>从需求到交付</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p class="text-sm text-slate-600">帮助自学者完成可展示成果。</p>
-                </CardContent>
-                <CardFooter>
-                  <Button variant="outline" size="sm">进入</Button>
-                </CardFooter>
-              </Card>
-              <Card class="border-slate-200/80 bg-white/80">
-                <CardHeader>
-                  <CardTitle>学习复盘清单</CardTitle>
-                  <CardDescription>总结与迭代</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p class="text-sm text-slate-600">让学习成果可持续。</p>
-                </CardContent>
-                <CardFooter>
-                  <Button variant="outline" size="sm">进入</Button>
-                </CardFooter>
-              </Card>
-              <Card class="border-slate-200/80 bg-white/80">
-                <CardHeader>
-                  <CardTitle>课程笔记清单</CardTitle>
-                  <CardDescription>结构化记录</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p class="text-sm text-slate-600">沉淀高质量笔记。</p>
-                </CardContent>
-                <CardFooter>
-                  <Button variant="outline" size="sm">进入</Button>
-                </CardFooter>
-              </Card>
-              <Card class="border-slate-200/80 bg-white/80">
-                <CardHeader>
-                  <CardTitle>可视化工具</CardTitle>
-                  <CardDescription>线代与几何</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p class="text-sm text-slate-600">配合图形辅助理解。</p>
-                </CardContent>
-                <CardFooter>
-                  <Button variant="outline" size="sm">进入</Button>
-                </CardFooter>
-              </Card>
-              <Card class="border-slate-200/80 bg-white/80">
-                <CardHeader>
-                  <CardTitle>数据集索引</CardTitle>
-                  <CardDescription>常用公开数据</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p class="text-sm text-slate-600">用于练习与实验。</p>
-                </CardContent>
-                <CardFooter>
-                  <Button variant="outline" size="sm">进入</Button>
-                </CardFooter>
-              </Card>
-              <Card class="border-slate-200/80 bg-white/80">
-                <CardHeader>
-                  <CardTitle>阅读资料库</CardTitle>
-                  <CardDescription>精选论文与文章</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p class="text-sm text-slate-600">持续更新内容。</p>
+                  <p class="text-sm text-slate-600">{{ item.summary }}</p>
                 </CardContent>
                 <CardFooter>
                   <Button variant="outline" size="sm">进入</Button>
@@ -129,37 +41,13 @@ import { TabsContent } from '@/components/ui/tabs'
 
         <TabsContent value="templates" class="mt-6">
           <LibraryGrid>
-              <Card class="border-slate-200/80 bg-white/80">
+              <Card v-for="item in templateItems" :key="item.id" class="border-slate-200/80 bg-white/80">
                 <CardHeader>
-                  <CardTitle>高频公式卡片</CardTitle>
-                  <CardDescription>快速复习与记忆</CardDescription>
+                  <CardTitle>{{ item.title }}</CardTitle>
+                  <CardDescription>{{ item.description }}</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <p class="text-sm text-slate-600">面向数学与算法常用公式。</p>
-                </CardContent>
-                <CardFooter>
-                  <Button variant="outline" size="sm">进入</Button>
-                </CardFooter>
-              </Card>
-              <Card class="border-slate-200/80 bg-white/80">
-                <CardHeader>
-                  <CardTitle>算法模板库</CardTitle>
-                  <CardDescription>常见解题套路</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p class="text-sm text-slate-600">涵盖图、树、动态规划等。</p>
-                </CardContent>
-                <CardFooter>
-                  <Button variant="outline" size="sm">进入</Button>
-                </CardFooter>
-              </Card>
-              <Card class="border-slate-200/80 bg-white/80">
-                <CardHeader>
-                  <CardTitle>模型评估模板</CardTitle>
-                  <CardDescription>指标与实验记录</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p class="text-sm text-slate-600">用于沉淀实验过程。</p>
+                  <p class="text-sm text-slate-600">{{ item.summary }}</p>
                 </CardContent>
                 <CardFooter>
                   <Button variant="outline" size="sm">进入</Button>
@@ -170,37 +58,13 @@ import { TabsContent } from '@/components/ui/tabs'
 
         <TabsContent value="checklists" class="mt-6">
           <LibraryGrid>
-              <Card class="border-slate-200/80 bg-white/80">
+              <Card v-for="item in checklistItems" :key="item.id" class="border-slate-200/80 bg-white/80">
                 <CardHeader>
-                  <CardTitle>项目实践清单</CardTitle>
-                  <CardDescription>从需求到交付</CardDescription>
+                  <CardTitle>{{ item.title }}</CardTitle>
+                  <CardDescription>{{ item.description }}</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <p class="text-sm text-slate-600">帮助自学者完成可展示成果。</p>
-                </CardContent>
-                <CardFooter>
-                  <Button variant="outline" size="sm">进入</Button>
-                </CardFooter>
-              </Card>
-              <Card class="border-slate-200/80 bg-white/80">
-                <CardHeader>
-                  <CardTitle>学习复盘清单</CardTitle>
-                  <CardDescription>总结与迭代</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p class="text-sm text-slate-600">让学习成果可持续。</p>
-                </CardContent>
-                <CardFooter>
-                  <Button variant="outline" size="sm">进入</Button>
-                </CardFooter>
-              </Card>
-              <Card class="border-slate-200/80 bg-white/80">
-                <CardHeader>
-                  <CardTitle>课程笔记清单</CardTitle>
-                  <CardDescription>结构化记录</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p class="text-sm text-slate-600">沉淀高质量笔记。</p>
+                  <p class="text-sm text-slate-600">{{ item.summary }}</p>
                 </CardContent>
                 <CardFooter>
                   <Button variant="outline" size="sm">进入</Button>
@@ -211,37 +75,13 @@ import { TabsContent } from '@/components/ui/tabs'
 
         <TabsContent value="tools" class="mt-6">
           <LibraryGrid>
-              <Card class="border-slate-200/80 bg-white/80">
+              <Card v-for="item in toolItems" :key="item.id" class="border-slate-200/80 bg-white/80">
                 <CardHeader>
-                  <CardTitle>可视化工具</CardTitle>
-                  <CardDescription>线代与几何</CardDescription>
+                  <CardTitle>{{ item.title }}</CardTitle>
+                  <CardDescription>{{ item.description }}</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <p class="text-sm text-slate-600">配合图形辅助理解。</p>
-                </CardContent>
-                <CardFooter>
-                  <Button variant="outline" size="sm">进入</Button>
-                </CardFooter>
-              </Card>
-              <Card class="border-slate-200/80 bg-white/80">
-                <CardHeader>
-                  <CardTitle>数据集索引</CardTitle>
-                  <CardDescription>常用公开数据</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p class="text-sm text-slate-600">用于练习与实验。</p>
-                </CardContent>
-                <CardFooter>
-                  <Button variant="outline" size="sm">进入</Button>
-                </CardFooter>
-              </Card>
-              <Card class="border-slate-200/80 bg-white/80">
-                <CardHeader>
-                  <CardTitle>阅读资料库</CardTitle>
-                  <CardDescription>精选论文与文章</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p class="text-sm text-slate-600">持续更新内容。</p>
+                  <p class="text-sm text-slate-600">{{ item.summary }}</p>
                 </CardContent>
                 <CardFooter>
                   <Button variant="outline" size="sm">进入</Button>

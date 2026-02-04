@@ -8,6 +8,22 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
+import { computed } from 'vue'
+import { useCourseStore } from '@/stores/courseStore'
+import { usePathStore } from '@/stores/pathStore'
+import { useProgressStore } from '@/stores/progressStore'
+
+const courseStore = useCourseStore()
+const pathStore = usePathStore()
+const progressStore = useProgressStore()
+
+const currentPath = computed(() => pathStore.getPathById(pathStore.currentPathId))
+const currentCourse = computed(() => courseStore.getCourseById(1))
+const currentLessonLabel = computed(() => {
+  const lesson = currentCourse.value.lessonItems.find((item) => item.id === progressStore.currentLessonId)
+  if (!lesson) return '下一步尚未设置'
+  return `${lesson.title}`
+})
 </script>
 
 <template>
@@ -19,17 +35,17 @@ import {
     <CardContent class="space-y-4">
       <div class="rounded-2xl border border-slate-200/80 bg-slate-50/80 p-4">
         <p class="text-sm font-medium text-slate-700">当前学习路径</p>
-        <p class="mt-1 text-lg font-semibold text-slate-900">机器学习 · 基础线性代数</p>
-        <p class="mt-2 text-xs text-slate-500">下一步：向量空间与矩阵分解</p>
+        <p class="mt-1 text-lg font-semibold text-slate-900">{{ currentPath.title }}</p>
+        <p class="mt-2 text-xs text-slate-500">下一步：{{ currentLessonLabel }}</p>
       </div>
       <div class="grid grid-cols-2 gap-4">
         <div class="rounded-2xl border border-slate-200/80 bg-white/90 p-3">
           <p class="text-xs text-slate-500">本周学习</p>
-          <p class="mt-2 text-xl font-semibold">6 课时</p>
+          <p class="mt-2 text-xl font-semibold">{{ progressStore.weeklyLessons }} 课时</p>
         </div>
         <div class="rounded-2xl border border-slate-200/80 bg-white/90 p-3">
           <p class="text-xs text-slate-500">累计学习</p>
-          <p class="mt-2 text-xl font-semibold">28 小时</p>
+          <p class="mt-2 text-xl font-semibold">{{ progressStore.totalHours }} 小时</p>
         </div>
       </div>
     </CardContent>

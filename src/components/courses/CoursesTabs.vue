@@ -6,6 +6,15 @@ defineProps({
     type: String,
     default: 'all',
   },
+  categories: {
+    type: Array,
+    default: () => [
+      { label: '全部', value: 'all' },
+      { label: '算法', value: 'algo' },
+      { label: '数学', value: 'math' },
+      { label: '机器学习', value: 'ml' },
+    ],
+  },
 })
 </script>
 
@@ -17,10 +26,9 @@ defineProps({
         <p class="mt-1 text-sm text-slate-500">按主题快速切换</p>
       </div>
       <TabsList>
-        <TabsTrigger value="all">全部</TabsTrigger>
-        <TabsTrigger value="algo">算法</TabsTrigger>
-        <TabsTrigger value="math">数学</TabsTrigger>
-        <TabsTrigger value="ml">机器学习</TabsTrigger>
+        <TabsTrigger v-for="category in categories" :key="category.value" :value="category.value">
+          {{ category.label }}
+        </TabsTrigger>
       </TabsList>
     </div>
     <slot />

@@ -15,30 +15,28 @@ const appliedQuery = ref('')
 const courseStore = useCourseStore()
 const courses = computed(() => courseStore.courseList)
 
+const categories = [
+  { label: '全部', value: 'all' },
+  { label: '算法', value: 'algo' },
+  { label: '数学', value: 'math' },
+  { label: '机器学习', value: 'ml' },
+]
+
 const goCourse = (id) => {
   router.push(`/courses/${id}`)
 }
 
 const keyword = computed(() => appliedQuery.value.trim().toLowerCase())
 
-const filteredAll = computed(() =>
-  courses.value.filter((course) => {
-    if (!keyword.value) return true
-    return `${course.title} ${course.description}`.toLowerCase().includes(keyword.value)
-  })
-)
+const matchesKeyword = (course) => {
+  if (!keyword.value) return true
+  return `${course.title} ${course.description}`.toLowerCase().includes(keyword.value)
+}
 
-const filteredAlgo = computed(() =>
-  filteredAll.value.filter((course) => course.category === 'algo')
-)
-
-const filteredMath = computed(() =>
-  filteredAll.value.filter((course) => course.category === 'math')
-)
-
-const filteredMl = computed(() =>
-  filteredAll.value.filter((course) => course.category === 'ml')
-)
+const filteredByCategory = (category) =>
+  courses.value.filter(
+    (course) => matchesKeyword(course) && (category === 'all' || course.category === category)
+  )
 
 const goSearch = () => {
   appliedQuery.value = searchQuery.value
@@ -54,21 +52,13 @@ const resetSearch = () => {
   <BasePage max-width="max-w-6xl">
     <CoursesHeader v-model="searchQuery" @search="goSearch" @reset="resetSearch" />
     <section class="mt-10">
-      <CoursesTabs default-value="all">
-        <TabsContent value="all" class="mt-6">
-          <CourseGrid :courses="filteredAll" @enter="goCourse" />
-        </TabsContent>
-
-        <TabsContent value="algo" class="mt-6">
-          <CourseGrid :courses="filteredAlgo" columns="md:grid-cols-2" @enter="goCourse" />
-        </TabsContent>
-
-        <TabsContent value="math" class="mt-6">
-          <CourseGrid :courses="filteredMath" columns="md:grid-cols-2" @enter="goCourse" />
-        </TabsContent>
-
-        <TabsContent value="ml" class="mt-6">
-          <CourseGrid :courses="filteredMl" columns="md:grid-cols-2" @enter="goCourse" />
+      <CoursesTabs default-value="all" :categories="categories">
+        <TabsContent v-for="category in categories" :key="category.value" :value="category.value" class="mt-6">
+          <CourseGrid
+            :courses="filteredByCategory(category.value)"
+            :columns="category.value === 'all' ? undefined : 'md:grid-cols-2'"
+            @enter="goCourse"
+          />
         </TabsContent>
       </CoursesTabs>
     </section>
