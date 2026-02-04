@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button'
 </script>
 
 <template>
-  <header class="grid items-center gap-8 md:grid-cols-[1fr_auto_1fr]">
+  <header class="grid w-full items-center gap-8 md:grid-cols-[1fr_auto_1fr]">
     <div class="flex items-center gap-3 px-4 py-2 md:justify-self-start">
       <div class="flex h-11 w-11 items-center justify-center rounded-2xl bg-slate-900 text-sm font-semibold text-white shadow-lg shadow-slate-900/20">
         W
