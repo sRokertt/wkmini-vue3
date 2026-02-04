@@ -31,8 +31,8 @@ const toggleFavorite = () => {
             <Badge variant="outline">可视化推导</Badge>
           </div>
           <div class="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
-            <router-link to="/lessons/1">
-              <Button class="bg-slate-900 text-white hover:bg-slate-800">开始学习</Button>
+            <router-link to="/courses/1/chapters">
+              <Button variant="outline">查看章节目录</Button>
             </router-link>
             <Button
               :variant="isFavorited ? 'default' : 'outline'"
@@ -42,33 +42,82 @@ const toggleFavorite = () => {
               {{ isFavorited ? '已收藏' : '收藏课程' }}
             </Button>
           </div>
+          <div class="mt-8 grid gap-4 md:grid-cols-3">
+            <div class="rounded-2xl border border-slate-200/70 bg-white/80 p-4">
+              <p class="text-xs font-medium text-slate-500">课程亮点</p>
+              <p class="mt-2 text-sm text-slate-700">几何直观 + 推导并重</p>
+            </div>
+            <div class="rounded-2xl border border-slate-200/70 bg-white/80 p-4">
+              <p class="text-xs font-medium text-slate-500">学习准备</p>
+              <p class="mt-2 text-sm text-slate-700">高中数学基础即可</p>
+            </div>
+            <div class="rounded-2xl border border-slate-200/70 bg-white/80 p-4">
+              <p class="text-xs font-medium text-slate-500">学习产出</p>
+              <p class="mt-2 text-sm text-slate-700">完成核心概念卡片</p>
+            </div>
+          </div>
+          <div class="mt-6 rounded-2xl border border-slate-200/70 bg-white/80 p-4">
+            <p class="text-xs font-medium text-slate-500">关键章节与学习方式</p>
+            <div class="mt-3 grid gap-4 md:grid-cols-2">
+              <ul class="space-y-1 text-sm text-slate-700">
+                <li>• 向量与空间</li>
+                <li>• 矩阵与线性变换</li>
+                <li>• 特征值与分解</li>
+              </ul>
+              <ul class="space-y-1 text-sm text-slate-700">
+                <li>• 例题推导 + 课堂练习</li>
+                <li>• 每节课 1 份要点笔记</li>
+                <li>• 章节复盘与概念卡片</li>
+              </ul>
+            </div>
+          </div>
         </div>
 
-        <Card class="border-slate-200/80 bg-white/80">
-          <CardHeader>
-            <CardTitle>课程信息</CardTitle>
-            <CardDescription>学习节奏与建议</CardDescription>
-          </CardHeader>
-          <CardContent class="space-y-4 text-sm text-slate-600">
-            <div>
-              <p class="text-xs text-slate-500">预计时长</p>
-              <p class="mt-1 text-lg font-semibold text-slate-900">8 小时</p>
-            </div>
-            <div>
-              <p class="text-xs text-slate-500">适合人群</p>
-              <p class="mt-1">准备进入机器学习/数据科学方向的学习者</p>
-            </div>
-            <div>
-              <p class="text-xs text-slate-500">学习建议</p>
-              <p class="mt-1">每周 2-3 课时，配合笔记与练习</p>
-            </div>
-          </CardContent>
-          <CardFooter>
-            <router-link class="w-full" to="/courses/1/plan">
-              <Button variant="outline" class="w-full">查看学习计划</Button>
-            </router-link>
-          </CardFooter>
-        </Card>
+        <div class="space-y-4">
+          <Card class="border-slate-200/80 bg-white/80">
+            <CardHeader>
+              <CardTitle>学习进度</CardTitle>
+              <CardDescription>上次学习位置</CardDescription>
+            </CardHeader>
+            <CardContent class="space-y-3 text-sm text-slate-600">
+              <div class="rounded-2xl border border-slate-200/70 bg-white/80 p-4">
+                <p class="text-xs text-slate-500">上次学习到</p>
+                <p class="mt-2 text-base font-semibold text-slate-900">2. 矩阵与线性变换</p>
+                <p class="mt-2 text-xs text-slate-500">已完成 2/12 章节</p>
+              </div>
+            </CardContent>
+            <CardFooter>
+              <router-link class="w-full" to="/lessons/2">
+                <Button class="w-full bg-slate-900 text-white hover:bg-slate-800">继续学习</Button>
+              </router-link>
+            </CardFooter>
+          </Card>
+          <Card class="border-slate-200/80 bg-white/80">
+            <CardHeader>
+              <CardTitle>课程信息</CardTitle>
+              <CardDescription>学习节奏与建议</CardDescription>
+            </CardHeader>
+            <CardContent class="space-y-4 text-sm text-slate-600">
+              <div>
+                <p class="text-xs text-slate-500">预计时长</p>
+                <p class="mt-1 text-lg font-semibold text-slate-900">8 小时</p>
+              </div>
+              <div>
+                <p class="text-xs text-slate-500">适合人群</p>
+                <p class="mt-1">准备进入机器学习/数据科学方向的学习者</p>
+              </div>
+              <div>
+                <p class="text-xs text-slate-500">学习建议</p>
+                <p class="mt-1">每周 2-3 课时，配合笔记与练习</p>
+              </div>
+            </CardContent>
+            <CardFooter>
+              <router-link class="w-full" to="/courses/1/plan">
+                <Button variant="outline" class="w-full">查看学习计划</Button>
+              </router-link>
+            </CardFooter>
+          </Card>
+        </div>
     </section>
 
     <section class="mt-10 grid gap-4 md:grid-cols-2">
