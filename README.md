@@ -1,22 +1,22 @@
 # wkmini-vue3
 
-Demo frontend for the wkmini product. This project uses static data and Pinia stores to simulate a real app without mock.js or backend services.
+wkmini 产品的演示前端。项目使用静态数据与 Pinia Store 模拟真实业务流转，无需 mock.js 或后端服务。
 
-## Tech Stack
+## 技术栈
 
 - Vue 3 + Vite
-- Pinia (state management)
+- Pinia（状态管理）
 - Vue Router
 - Tailwind CSS
-- tweakcn-style UI components (in `src/components/ui`)
+- tweakcn 风格组件（位于 `src/components/ui`）
 
-## Data Architecture
+## 数据架构
 
-- Static data source: `src/data/courses.js`
-- Pinia stores:
-  - `src/stores/courseStore.js` (courses + favorites)
-  - `src/stores/calendarStore.js` (calendar memos)
-  - `src/stores/progressStore.js` (learning progress)
+- 静态数据源：`src/data/courses.js`
+- Pinia stores：
+  - `src/stores/courseStore.js`（课程数据 + 收藏）
+  - `src/stores/calendarStore.js`（日历备忘）
+  - `src/stores/progressStore.js`（学习进度）
 
 ### Local Storage Keys
 
@@ -26,19 +26,19 @@ Demo frontend for the wkmini product. This project uses static data and Pinia st
 - `wkmini-lesson-current`
 - `wkmini-course-favorites`
 
-## Project Setup
+## 安装与运行
 
 ```sh
 pnpm install
 ```
 
-### Compile and Hot-Reload for Development
+### 开发环境
 
 ```sh
 pnpm dev
 ```
 
-### Compile and Minify for Production
+### 构建生产包
 
 ```sh
 pnpm build
