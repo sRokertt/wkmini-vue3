@@ -113,22 +113,6 @@ watchEffect(() => {
 
         <Card class="border-slate-200/80 bg-white/80">
           <CardHeader>
-            <CardTitle>推荐课程</CardTitle>
-            <CardDescription>路径内课程清单</CardDescription>
-          </CardHeader>
-          <CardContent class="space-y-3 text-sm text-slate-600">
-            <div
-              v-for="course in recommendedCourses"
-              :key="course.id"
-              class="flex items-center justify-between rounded-xl border border-slate-200/70 bg-white/80 px-4 py-3"
-            >
-              <span>{{ course.title }}</span>
-              <Button variant="outline" size="sm" @click="$router.push(`/courses/${course.id}`)">进入</Button>
-            </div>
-          </CardContent>
-        </Card>
-        <Card class="border-slate-200/80 bg-white/80">
-          <CardHeader>
             <CardTitle>路径目标</CardTitle>
             <CardDescription>完成后可达成</CardDescription>
           </CardHeader>
