@@ -34,7 +34,7 @@ watchEffect(() => {
 <template>
   <BasePage>
     <section class="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
-        <div class="rounded-3xl border border-white/80 bg-white/70 p-8 shadow-[0_24px_60px_-40px_rgba(15,23,42,0.35)] backdrop-blur">
+        <div class="flex h-full flex-col rounded-3xl border border-white/80 bg-white/70 p-8 shadow-[0_24px_60px_-40px_rgba(15,23,42,0.35)] backdrop-blur">
           <div class="flex flex-wrap items-center gap-3">
             <Badge class="bg-slate-900 text-white">学习路径</Badge>
             <Badge variant="outline" class="border-amber-300/60 bg-amber-50 text-amber-700">{{ durationLabel }}</Badge>
@@ -47,7 +47,7 @@ watchEffect(() => {
           <div class="mt-6 flex flex-wrap gap-2 text-xs text-slate-500">
             <Badge v-for="tag in path.tags" :key="tag" variant="outline">{{ tag }}</Badge>
           </div>
-          <div class="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
+          <div class="mt-auto flex flex-col gap-3 pt-6 sm:flex-row sm:items-center">
             <Button class="bg-slate-900 text-white hover:bg-slate-800" @click="router.push(`/paths/${pathId}/start`)">开始学习路径</Button>
             <Button
               :variant="isFavorited ? 'default' : 'outline'"
@@ -88,7 +88,7 @@ watchEffect(() => {
             </div>
           </CardContent>
           <CardFooter>
-            <Button variant="outline" class="w-full" @click="router.push(`/paths/${pathId}/courses`)">查看课程清单</Button>
+            <div class="h-1" />
           </CardFooter>
         </Card>
     </section>

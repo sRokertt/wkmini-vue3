@@ -55,66 +55,32 @@ const durationLabel = computed(() => path.value.durationText || `${path.value.du
       </Card>
     </section>
 
-    <section class="mt-10 grid gap-4 md:grid-cols-2">
-      <Card class="border-slate-200/80 bg-white/80">
-        <CardHeader>
-          <CardTitle>阶段节奏</CardTitle>
-          <CardDescription>按阶段推进</CardDescription>
-        </CardHeader>
-        <CardContent class="space-y-3 text-sm text-slate-600">
-          <div
-            v-for="stage in path.stages"
-            :key="stage.title"
-            class="rounded-xl border border-slate-200/70 bg-white/80 px-4 py-3"
-          >
-            <p class="font-medium text-slate-800">{{ stage.title }}</p>
-            <p class="mt-1 text-xs text-slate-500">{{ stage.detail }}</p>
-          </div>
-        </CardContent>
-      </Card>
-
-      <Card class="border-slate-200/80 bg-white/80">
-        <CardHeader>
-          <CardTitle>路径课程清单</CardTitle>
-          <CardDescription>按推荐顺序学习</CardDescription>
-        </CardHeader>
-        <CardContent class="space-y-3 text-sm text-slate-600">
-          <router-link
-            v-for="course in courses"
-            :key="course.id"
-            class="flex items-center justify-between rounded-xl border border-slate-200/70 bg-white/80 px-4 py-3 text-slate-700 hover:border-slate-300"
-            :to="`/courses/${course.id}`"
-          >
-            <span>{{ course.title }}</span>
-            <span class="text-xs text-slate-400">{{ course.chapters }} 章节</span>
-          </router-link>
-        </CardContent>
-      </Card>
-    </section>
-
     <section class="mt-10">
       <Card class="border-slate-200/80 bg-white/80">
         <CardHeader>
-          <CardTitle>学习路径</CardTitle>
-          <CardDescription>按节点推进课程学习</CardDescription>
+          <CardTitle>路径图示例</CardTitle>
+          <CardDescription>纵向时间线展示</CardDescription>
         </CardHeader>
         <CardContent>
-          <div class="flex flex-wrap items-center gap-4">
-            <template v-for="(course, index) in courses" :key="course.id">
+          <div class="relative space-y-6">
+            <div class="absolute left-4 top-2 h-full w-px bg-slate-200" />
+            <div
+              v-for="(course, index) in courses"
+              :key="course.id"
+              class="relative flex gap-4"
+            >
+              <div class="relative z-10 flex h-8 w-8 items-center justify-center rounded-full bg-slate-900 text-xs font-semibold text-white">
+                {{ index + 1 }}
+              </div>
               <router-link
                 :to="`/courses/${course.id}`"
-                class="group flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-white/80 px-4 py-3 text-sm text-slate-700 transition hover:border-slate-300"
+                class="flex-1 rounded-2xl border border-slate-200/70 bg-white/80 px-4 py-3 text-sm text-slate-700 transition hover:border-slate-300"
               >
-                <span class="flex h-8 w-8 items-center justify-center rounded-full bg-slate-900 text-xs font-semibold text-white">
-                  {{ index + 1 }}
-                </span>
-                <div>
-                  <p class="font-medium text-slate-900 group-hover:text-slate-950">{{ course.title }}</p>
-                  <p class="text-xs text-slate-500">{{ course.chapters }} 章节</p>
-                </div>
+                <p class="font-medium text-slate-900">{{ course.title }}</p>
+                <p class="mt-1 text-xs text-slate-500">{{ course.chapters }} 章节</p>
+                <p class="mt-2 text-xs text-slate-500">点击进入课程详情</p>
               </router-link>
-              <span v-if="index < courses.length - 1" class="hidden h-px w-10 bg-slate-200 md:block" />
-            </template>
+            </div>
           </div>
         </CardContent>
       </Card>
