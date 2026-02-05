@@ -52,14 +52,31 @@ const errorRoute = (name, to, reason) => ({
   },
 })
 
+const recordError = (to, reason) => {
+  if (typeof window === 'undefined') return
+  const payload = {
+    path: to.fullPath,
+    reason,
+    at: new Date().toISOString(),
+  }
+  window.localStorage.setItem('wkmini-last-error', JSON.stringify(payload))
+}
+
+const isValidText = (value) => typeof value === 'string' && value.trim().length > 0
+const hasRequiredLessonFields = (lesson) =>
+  Number.isInteger(lesson?.id) && isValidText(lesson?.title) && isValidText(lesson?.duration)
+const hasRequiredStageFields = (stage) => isValidText(stage?.title) && isValidText(stage?.detail)
+
 router.beforeEach((to) => {
   if (to.meta?.requiresAuth && !isAuthenticated()) {
+    recordError(to, 'auth-required')
     return errorRoute('error-403', to, 'auth-required')
   }
 
   if (to.name === 'courses' && to.query?.category) {
     const category = String(to.query.category)
     if (!allowedCourseCategories.has(category)) {
+      recordError(to, 'invalid-category')
       return errorRoute('error-404', to, 'invalid-category')
     }
   }
@@ -88,6 +105,7 @@ router.beforeEach((to) => {
   const idParam = to.params.id
   if (!idParam) return true
   if (!isValidId(idParam)) {
+    recordError(to, 'invalid-id')
     return errorRoute('error-404', to, 'invalid-id')
   }
 
@@ -96,22 +114,47 @@ router.beforeEach((to) => {
     const courseStore = useCourseStore()
     const exists = courseStore.courseList.some((item) => item.id === id)
     if (!exists) {
+      recordError(to, 'course-not-found')
       return errorRoute('error-404', to, 'course-not-found')
     }
 
     const course = courseStore.getCourseById(id)
-    if (!course.title || !course.description) {
+    if (!isValidText(course.title) || !isValidText(course.description)) {
+      recordError(to, 'course-incomplete')
       return errorRoute('error-404', to, 'course-incomplete')
     }
 
+    if (!Array.isArray(course.tags) || course.tags.length === 0) {
+      recordError(to, 'course-tags-missing')
+      return errorRoute('error-404', to, 'course-tags-missing')
+    }
+
     if (to.name === 'course-chapters' && (!course.lessonItems || course.lessonItems.length === 0)) {
+      recordError(to, 'course-empty-chapters')
       return errorRoute('error-404', to, 'course-empty-chapters')
+    }
+
+    if (to.name === 'course-chapters' && !course.lessonItems.every(hasRequiredLessonFields)) {
+      recordError(to, 'course-chapters-invalid')
+      return errorRoute('error-404', to, 'course-chapters-invalid')
+    }
+
+    if (to.name === 'course-detail') {
+      if (!isValidText(course.highlights) || !isValidText(course.readiness) || !isValidText(course.outcome)) {
+        recordError(to, 'course-detail-incomplete')
+        return errorRoute('error-404', to, 'course-detail-incomplete')
+      }
+      if (!Array.isArray(course.recommended) || course.recommended.length === 0) {
+        recordError(to, 'course-recommended-missing')
+        return errorRoute('error-404', to, 'course-recommended-missing')
+      }
     }
 
     if (to.name === 'course-plan') {
       const hasPlanWeeks = Array.isArray(course.planWeeks) && course.planWeeks.length > 0
       const hasOutcomes = Array.isArray(course.outcomes) && course.outcomes.length > 0
       if (!hasPlanWeeks || !hasOutcomes) {
+        recordError(to, 'course-plan-missing')
         return errorRoute('error-404', to, 'course-plan-missing')
       }
     }
@@ -122,9 +165,11 @@ router.beforeEach((to) => {
     const course = courseStore.getCourseById(1)
     const lesson = course.lessonItems?.find((item) => item.id === id)
     if (!lesson) {
+      recordError(to, 'lesson-not-found')
       return errorRoute('error-404', to, 'lesson-not-found')
     }
-    if (!lesson.content) {
+    if (!lesson.content || lesson.content.trim().length < 10) {
+      recordError(to, 'lesson-empty')
       return errorRoute('error-404', to, 'lesson-empty')
     }
   }
@@ -133,14 +178,21 @@ router.beforeEach((to) => {
     const pathStore = usePathStore()
     const exists = pathStore.pathList.some((item) => item.id === id)
     if (!exists) {
+      recordError(to, 'path-not-found')
       return errorRoute('error-404', to, 'path-not-found')
     }
     const path = pathStore.getPathById(id)
-    if (!path.title || !path.summary) {
+    if (!isValidText(path.title) || !isValidText(path.summary)) {
+      recordError(to, 'path-incomplete')
       return errorRoute('error-404', to, 'path-incomplete')
     }
     if (Array.isArray(path.stages) && path.stages.length === 0) {
+      recordError(to, 'path-empty-stages')
       return errorRoute('error-404', to, 'path-empty-stages')
+    }
+    if (Array.isArray(path.stages) && !path.stages.every(hasRequiredStageFields)) {
+      recordError(to, 'path-stages-invalid')
+      return errorRoute('error-404', to, 'path-stages-invalid')
     }
     if (Array.isArray(path.recommendedCourseIds) && path.recommendedCourseIds.length > 0) {
       const courseStore = useCourseStore()
@@ -148,6 +200,7 @@ router.beforeEach((to) => {
         (courseId) => !courseStore.courseList.some((item) => item.id === courseId)
       )
       if (invalid) {
+        recordError(to, 'path-course-invalid')
         return errorRoute('error-500', to, 'path-course-invalid')
       }
     }

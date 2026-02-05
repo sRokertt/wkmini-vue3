@@ -9,6 +9,30 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 const route = useRoute()
 const fromPath = computed(() => route.query.from || '')
 const reason = computed(() => route.query.reason || '')
+const reasonText = computed(() => {
+  const map = {
+    'invalid-category': '分类参数无效',
+    'invalid-id': 'ID 参数无效',
+    'course-not-found': '课程不存在',
+    'course-incomplete': '课程数据不完整',
+    'course-tags-missing': '课程标签缺失',
+    'course-empty-chapters': '课程暂无章节',
+    'course-chapters-invalid': '章节数据不完整',
+    'course-detail-incomplete': '课程详情数据不完整',
+    'course-recommended-missing': '推荐资料缺失',
+    'course-plan-missing': '学习计划缺失',
+    'lesson-not-found': '课时不存在',
+    'lesson-empty': '课时内容缺失',
+    'path-not-found': '路径不存在',
+    'path-incomplete': '路径数据不完整',
+    'path-empty-stages': '路径阶段缺失',
+    'path-stages-invalid': '路径阶段数据不完整',
+    'courses-empty': '课程列表为空',
+    'paths-empty': '路径列表为空',
+    'library-empty': '资料库为空',
+  }
+  return map[reason.value] || ''
+})
 </script>
 
 <template>
@@ -25,7 +49,8 @@ const reason = computed(() => route.query.reason || '')
         </p>
         <div v-if="fromPath || reason" class="mt-4 rounded-2xl border border-slate-200/70 bg-white/80 p-4 text-xs text-slate-500">
           <p v-if="fromPath">来源路径：{{ fromPath }}</p>
-          <p v-if="reason">触发原因：{{ reason }}</p>
+          <p v-if="reasonText">触发原因：{{ reasonText }}</p>
+          <p v-else-if="reason">触发原因：{{ reason }}</p>
         </div>
         <div class="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
           <router-link to="/">

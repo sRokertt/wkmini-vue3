@@ -9,6 +9,13 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 const route = useRoute()
 const fromPath = computed(() => route.query.from || '')
 const reason = computed(() => route.query.reason || '')
+const reasonText = computed(() => {
+  const map = {
+    'auth-required': '需要登录或权限不足',
+    'feature-locked': '功能尚未开放',
+  }
+  return map[reason.value] || ''
+})
 </script>
 
 <template>
@@ -25,7 +32,8 @@ const reason = computed(() => route.query.reason || '')
         </p>
         <div v-if="fromPath || reason" class="mt-4 rounded-2xl border border-slate-200/70 bg-white/80 p-4 text-xs text-slate-500">
           <p v-if="fromPath">来源路径：{{ fromPath }}</p>
-          <p v-if="reason">触发原因：{{ reason }}</p>
+          <p v-if="reasonText">触发原因：{{ reasonText }}</p>
+          <p v-else-if="reason">触发原因：{{ reason }}</p>
         </div>
         <div class="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
           <router-link to="/">
