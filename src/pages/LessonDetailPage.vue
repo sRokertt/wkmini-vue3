@@ -40,6 +40,7 @@ watch(currentLessonId, (value) => {
 
 const getStatus = (lessonId) => progressStore.getStatus(lessonId)
 
+
 const md = new MarkdownIt({
   html: false,
   linkify: true,

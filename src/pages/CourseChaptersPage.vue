@@ -15,14 +15,16 @@ const courseStore = useCourseStore()
 const course = computed(() => courseStore.getCourseById(courseId.value))
 const chapters = computed(() => course.value.lessonItems || [])
 const totalChapters = computed(() => chapters.value.length)
+const hasChapters = computed(() => chapters.value.length > 0)
 
 const progressStore = useProgressStore()
 const startLesson = computed(() => {
   const current = chapters.value.find((chapter) => chapter.id === progressStore.currentLessonId)
-  return current || chapters.value[0]
+  return current || chapters.value[0] || null
 })
 
 const getStatus = (chapterId) => progressStore.getStatus(chapterId)
+
 </script>
 
 <template>
@@ -36,12 +38,12 @@ const getStatus = (chapterId) => progressStore.getStatus(chapterId)
         </div>
         <h1 class="mt-5 text-3xl font-semibold">课程章节目录</h1>
         <p class="mt-3 text-sm text-slate-600">集中查看所有章节并直接进入学习。</p>
-        <p class="mt-2 text-xs text-slate-500">上次学习到：{{ startLesson.title }}</p>
+        <p v-if="hasChapters && startLesson" class="mt-2 text-xs text-slate-500">上次学习到：{{ startLesson.title }}</p>
         <div class="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
           <router-link :to="`/courses/${courseId}`">
             <Button variant="outline">返回课程详情</Button>
           </router-link>
-          <router-link :to="`/lessons/${startLesson.id}`">
+          <router-link v-if="hasChapters && startLesson" :to="`/lessons/${startLesson.id}`">
             <Button class="bg-slate-900 text-white hover:bg-slate-800">继续学习</Button>
           </router-link>
         </div>
@@ -66,7 +68,7 @@ const getStatus = (chapterId) => progressStore.getStatus(chapterId)
           <CardTitle>章节列表</CardTitle>
           <CardDescription>点击进入具体内容</CardDescription>
         </CardHeader>
-        <CardContent class="grid gap-3 text-sm text-slate-600">
+        <CardContent v-if="hasChapters" class="grid gap-3 text-sm text-slate-600">
           <router-link
             v-for="chapter in chapters"
             :key="chapter.id"

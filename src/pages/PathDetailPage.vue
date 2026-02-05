@@ -1,6 +1,6 @@
 <script setup>
 import { computed } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import BasePage from '@/components/layout/BasePage.vue'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -9,6 +9,7 @@ import { usePathStore } from '@/stores/pathStore'
 import { useCourseStore } from '@/stores/courseStore'
 
 const route = useRoute()
+const router = useRouter()
 const pathStore = usePathStore()
 const courseStore = useCourseStore()
 
@@ -18,6 +19,7 @@ const recommendedCourses = computed(() =>
   path.value.recommendedCourseIds.map((id) => courseStore.getCourseById(id))
 )
 const durationLabel = computed(() => path.value.durationText || `${path.value.durationWeeks} 周`)
+
 </script>
 
 <template>
@@ -37,8 +39,8 @@ const durationLabel = computed(() => path.value.durationText || `${path.value.du
             <Badge v-for="tag in path.tags" :key="tag" variant="outline">{{ tag }}</Badge>
           </div>
           <div class="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
-            <Button class="bg-slate-900 text-white hover:bg-slate-800">开始学习路径</Button>
-            <Button variant="outline">收藏路径</Button>
+            <Button class="bg-slate-900 text-white hover:bg-slate-800" @click="router.push('/errors/403')">开始学习路径</Button>
+            <Button variant="outline" @click="router.push('/errors/403')">收藏路径</Button>
             <Button variant="outline" @click="$router.push('/paths')">返回路径列表</Button>
           </div>
         </div>
@@ -63,7 +65,7 @@ const durationLabel = computed(() => path.value.durationText || `${path.value.du
             </div>
           </CardContent>
           <CardFooter>
-            <Button variant="outline" class="w-full">查看课程清单</Button>
+            <Button variant="outline" class="w-full" @click="router.push('/errors/403')">查看课程清单</Button>
           </CardFooter>
         </Card>
     </section>

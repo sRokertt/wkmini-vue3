@@ -29,6 +29,7 @@ const completedCount = computed(() => progressStore.completedCount)
 const toggleFavorite = () => {
   courseStore.toggleFavorite(courseId.value)
 }
+
 </script>
 
 <template>

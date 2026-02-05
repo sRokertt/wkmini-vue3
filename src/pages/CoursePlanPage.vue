@@ -119,6 +119,7 @@ const goToToday = () => {
 const closeDialog = () => {
   isDialogOpen.value = false
 }
+
 </script>
 
 <template>
