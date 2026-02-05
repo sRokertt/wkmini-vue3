@@ -26,15 +26,15 @@ const formatWeeks = (weeks, text) => text || `${weeks} 周`
       <PathsTabs default-value="all">
         <TabsContent value="all" class="mt-6">
           <PathsGrid>
-            <Card v-for="path in allPaths" :key="path.id" class="border-slate-200/80 bg-white/80">
+            <Card v-for="path in allPaths" :key="path.id" class="flex h-full flex-col border-slate-200/80 bg-white/80">
               <CardHeader>
                 <CardTitle>{{ path.title }}</CardTitle>
                 <CardDescription>{{ path.description }}</CardDescription>
               </CardHeader>
-              <CardContent>
+              <CardContent class="flex-1">
                 <p class="text-sm text-slate-600">{{ path.summary }}</p>
               </CardContent>
-              <CardFooter class="flex items-center justify-between">
+              <CardFooter class="mt-auto flex items-center justify-between">
                 <Badge variant="outline">{{ formatWeeks(path.durationWeeks, path.durationText) }}</Badge>
                 <router-link :to="`/paths/${path.id}`">
                   <Button variant="outline" size="sm">查看详情</Button>
@@ -45,15 +45,15 @@ const formatWeeks = (weeks, text) => text || `${weeks} 周`
         </TabsContent>
         <TabsContent value="ml" class="mt-6">
           <PathsGrid>
-            <Card v-for="path in mlPaths" :key="path.id" class="border-slate-200/80 bg-white/80">
+            <Card v-for="path in mlPaths" :key="path.id" class="flex h-full flex-col border-slate-200/80 bg-white/80">
               <CardHeader>
                 <CardTitle>{{ path.title }}</CardTitle>
                 <CardDescription>{{ path.description }}</CardDescription>
               </CardHeader>
-              <CardContent>
+              <CardContent class="flex-1">
                 <p class="text-sm text-slate-600">{{ path.summary }}</p>
               </CardContent>
-              <CardFooter class="flex items-center justify-between">
+              <CardFooter class="mt-auto flex items-center justify-between">
                 <Badge variant="outline">{{ formatWeeks(path.durationWeeks, path.durationText) }}</Badge>
                 <router-link :to="`/paths/${path.id}`">
                   <Button variant="outline" size="sm">查看详情</Button>
@@ -64,15 +64,15 @@ const formatWeeks = (weeks, text) => text || `${weeks} 周`
         </TabsContent>
         <TabsContent value="eng" class="mt-6">
           <PathsGrid>
-            <Card v-for="path in engPaths" :key="path.id" class="border-slate-200/80 bg-white/80">
+            <Card v-for="path in engPaths" :key="path.id" class="flex h-full flex-col border-slate-200/80 bg-white/80">
               <CardHeader>
                 <CardTitle>{{ path.title }}</CardTitle>
                 <CardDescription>{{ path.description }}</CardDescription>
               </CardHeader>
-              <CardContent>
+              <CardContent class="flex-1">
                 <p class="text-sm text-slate-600">{{ path.summary }}</p>
               </CardContent>
-              <CardFooter class="flex items-center justify-between">
+              <CardFooter class="mt-auto flex items-center justify-between">
                 <Badge variant="outline">{{ formatWeeks(path.durationWeeks, path.durationText) }}</Badge>
                 <router-link :to="`/paths/${path.id}`">
                   <Button variant="outline" size="sm">查看详情</Button>
@@ -83,15 +83,15 @@ const formatWeeks = (weeks, text) => text || `${weeks} 周`
         </TabsContent>
         <TabsContent value="math" class="mt-6">
           <PathsGrid>
-            <Card v-for="path in mathPaths" :key="path.id" class="border-slate-200/80 bg-white/80">
+            <Card v-for="path in mathPaths" :key="path.id" class="flex h-full flex-col border-slate-200/80 bg-white/80">
               <CardHeader>
                 <CardTitle>{{ path.title }}</CardTitle>
                 <CardDescription>{{ path.description }}</CardDescription>
               </CardHeader>
-              <CardContent>
+              <CardContent class="flex-1">
                 <p class="text-sm text-slate-600">{{ path.summary }}</p>
               </CardContent>
-              <CardFooter class="flex items-center justify-between">
+              <CardFooter class="mt-auto flex items-center justify-between">
                 <Badge variant="outline">{{ formatWeeks(path.durationWeeks, path.durationText) }}</Badge>
                 <router-link :to="`/paths/${path.id}`">
                   <Button variant="outline" size="sm">查看详情</Button>

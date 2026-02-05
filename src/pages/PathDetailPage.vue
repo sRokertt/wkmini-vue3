@@ -1,5 +1,5 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, watchEffect } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import BasePage from '@/components/layout/BasePage.vue'
 import { Badge } from '@/components/ui/badge'
@@ -19,6 +19,11 @@ const recommendedCourses = computed(() =>
   path.value.recommendedCourseIds.map((id) => courseStore.getCourseById(id))
 )
 const durationLabel = computed(() => path.value.durationText || `${path.value.durationWeeks} 周`)
+const isFavorited = computed(() => pathStore.isFavorited(pathId.value))
+
+watchEffect(() => {
+  pathStore.setCurrentPath(pathId.value)
+})
 
 </script>
 
@@ -39,8 +44,14 @@ const durationLabel = computed(() => path.value.durationText || `${path.value.du
             <Badge v-for="tag in path.tags" :key="tag" variant="outline">{{ tag }}</Badge>
           </div>
           <div class="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
-            <Button class="bg-slate-900 text-white hover:bg-slate-800" @click="router.push('/errors/403')">开始学习路径</Button>
-            <Button variant="outline" @click="router.push('/errors/403')">收藏路径</Button>
+            <Button class="bg-slate-900 text-white hover:bg-slate-800" @click="router.push(`/paths/${pathId}/start`)">开始学习路径</Button>
+            <Button
+              :variant="isFavorited ? 'default' : 'outline'"
+              :class="isFavorited ? 'bg-slate-900 text-white hover:bg-slate-800' : ''"
+              @click="pathStore.toggleFavorite(pathId.value)"
+            >
+              {{ isFavorited ? '已收藏' : '收藏路径' }}
+            </Button>
             <Button variant="outline" @click="$router.push('/paths')">返回路径列表</Button>
           </div>
         </div>
@@ -56,6 +67,14 @@ const durationLabel = computed(() => path.value.durationText || `${path.value.du
               <p class="mt-1 text-lg font-semibold text-slate-900">{{ durationLabel }}</p>
             </div>
             <div>
+              <p class="text-xs text-slate-500">难度等级</p>
+              <p class="mt-1">{{ path.level }}</p>
+            </div>
+            <div>
+              <p class="text-xs text-slate-500">学习强度</p>
+              <p class="mt-1">{{ path.intensity }}</p>
+            </div>
+            <div>
               <p class="text-xs text-slate-500">适合人群</p>
               <p class="mt-1">{{ path.audience }}</p>
             </div>
@@ -65,7 +84,7 @@ const durationLabel = computed(() => path.value.durationText || `${path.value.du
             </div>
           </CardContent>
           <CardFooter>
-            <Button variant="outline" class="w-full" @click="router.push('/errors/403')">查看课程清单</Button>
+            <Button variant="outline" class="w-full" @click="router.push(`/paths/${pathId}/courses`)">查看课程清单</Button>
           </CardFooter>
         </Card>
     </section>
@@ -102,6 +121,15 @@ const durationLabel = computed(() => path.value.durationText || `${path.value.du
               <span>{{ course.title }}</span>
               <Button variant="outline" size="sm" @click="$router.push(`/courses/${course.id}`)">进入</Button>
             </div>
+          </CardContent>
+        </Card>
+        <Card class="border-slate-200/80 bg-white/80">
+          <CardHeader>
+            <CardTitle>路径目标</CardTitle>
+            <CardDescription>完成后可达成</CardDescription>
+          </CardHeader>
+          <CardContent class="space-y-2 text-sm text-slate-600">
+            <p v-for="goal in path.goals" :key="goal">• {{ goal }}</p>
           </CardContent>
         </Card>
     </section>

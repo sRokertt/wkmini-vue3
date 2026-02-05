@@ -7,6 +7,8 @@ import CoursePlanPage from '@/pages/CoursePlanPage.vue'
 import LessonDetailPage from '@/pages/LessonDetailPage.vue'
 import PathsPage from '@/pages/PathsPage.vue'
 import PathDetailPage from '@/pages/PathDetailPage.vue'
+import PathCoursesPage from '@/pages/PathCoursesPage.vue'
+import PathStartPage from '@/pages/PathStartPage.vue'
 import LibraryPage from '@/pages/LibraryPage.vue'
 import AboutPage from '@/pages/AboutPage.vue'
 import ErrorNotFoundPage from '@/pages/ErrorNotFoundPage.vue'
@@ -27,6 +29,8 @@ const router = createRouter({
     { path: '/lessons/:id', name: 'lesson-detail', component: LessonDetailPage },
     { path: '/paths', name: 'paths', component: PathsPage },
     { path: '/paths/:id', name: 'path-detail', component: PathDetailPage },
+    { path: '/paths/:id/start', name: 'path-start', component: PathStartPage },
+    { path: '/paths/:id/courses', name: 'path-courses', component: PathCoursesPage },
     { path: '/library', name: 'library', component: LibraryPage },
     { path: '/about', name: 'about', component: AboutPage },
     { path: '/errors/404', name: 'error-404', component: ErrorNotFoundPage },
@@ -174,7 +178,7 @@ router.beforeEach((to) => {
     }
   }
 
-  if (to.name === 'path-detail') {
+  if (to.name === 'path-detail' || to.name === 'path-start' || to.name === 'path-courses') {
     const pathStore = usePathStore()
     const exists = pathStore.pathList.some((item) => item.id === id)
     if (!exists) {
