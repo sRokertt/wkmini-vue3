@@ -21,6 +21,10 @@ const recommendedCourses = computed(() =>
 const durationLabel = computed(() => path.value.durationText || `${path.value.durationWeeks} 周`)
 const isFavorited = computed(() => pathStore.isFavorited(pathId.value))
 
+const toggleFavorite = () => {
+  pathStore.toggleFavorite(pathId.value)
+}
+
 watchEffect(() => {
   pathStore.setCurrentPath(pathId.value)
 })
@@ -48,7 +52,7 @@ watchEffect(() => {
             <Button
               :variant="isFavorited ? 'default' : 'outline'"
               :class="isFavorited ? 'bg-slate-900 text-white hover:bg-slate-800' : ''"
-              @click="pathStore.toggleFavorite(pathId.value)"
+              @click="toggleFavorite"
             >
               {{ isFavorited ? '已收藏' : '收藏路径' }}
             </Button>

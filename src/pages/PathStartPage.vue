@@ -91,5 +91,33 @@ const durationLabel = computed(() => path.value.durationText || `${path.value.du
         </CardContent>
       </Card>
     </section>
+
+    <section class="mt-10">
+      <Card class="border-slate-200/80 bg-white/80">
+        <CardHeader>
+          <CardTitle>学习路径</CardTitle>
+          <CardDescription>按节点推进课程学习</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div class="flex flex-wrap items-center gap-4">
+            <template v-for="(course, index) in courses" :key="course.id">
+              <router-link
+                :to="`/courses/${course.id}`"
+                class="group flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-white/80 px-4 py-3 text-sm text-slate-700 transition hover:border-slate-300"
+              >
+                <span class="flex h-8 w-8 items-center justify-center rounded-full bg-slate-900 text-xs font-semibold text-white">
+                  {{ index + 1 }}
+                </span>
+                <div>
+                  <p class="font-medium text-slate-900 group-hover:text-slate-950">{{ course.title }}</p>
+                  <p class="text-xs text-slate-500">{{ course.chapters }} 章节</p>
+                </div>
+              </router-link>
+              <span v-if="index < courses.length - 1" class="hidden h-px w-10 bg-slate-200 md:block" />
+            </template>
+          </div>
+        </CardContent>
+      </Card>
+    </section>
   </BasePage>
 </template>
