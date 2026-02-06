@@ -11,7 +11,7 @@ import {
 </script>
 
 <template>
-  <BasePage max-width="max-w-5xl">
+  <BasePage max-width="max-w-6xl">
     <section class="rounded-3xl border border-white/80 bg-white/70 p-8 shadow-[0_24px_60px_-40px_rgba(15,23,42,0.35)] backdrop-blur">
       <div class="flex flex-wrap items-center gap-3">
         <Badge class="bg-slate-900 text-white">关于 wkmini</Badge>
