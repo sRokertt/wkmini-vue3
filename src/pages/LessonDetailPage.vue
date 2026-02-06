@@ -3,6 +3,7 @@ import { computed, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import MarkdownIt from 'markdown-it'
 import BasePage from '@/components/layout/BasePage.vue'
+import BreadcrumbNav from '@/components/layout/BreadcrumbNav.vue'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
@@ -47,10 +48,19 @@ const md = new MarkdownIt({
 })
 const lessonMarkdown = computed(() => currentLesson.value?.content || '')
 const renderedMarkdown = computed(() => md.render(lessonMarkdown.value))
+
+const breadcrumbItems = computed(() => [
+  { label: '首页', to: '/' },
+  { label: '课程', to: '/courses' },
+  { label: course.value?.title || '课程', to: '/courses/1' },
+  { label: '章节目录', to: '/courses/1/chapters' },
+  { label: currentLesson.value?.title || '章节/文章' },
+])
 </script>
 
 <template>
   <BasePage>
+    <BreadcrumbNav :items="breadcrumbItems" />
     <section class="grid gap-6 lg:grid-cols-[1.25fr_0.75fr]">
         <article class="flex h-full flex-col rounded-3xl border border-white/80 bg-white/70 p-8 shadow-[0_24px_60px_-40px_rgba(15,23,42,0.35)] backdrop-blur">
           <div class="flex flex-wrap items-center gap-3">

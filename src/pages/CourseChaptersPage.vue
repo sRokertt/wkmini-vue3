@@ -4,6 +4,7 @@ import { useRoute } from 'vue-router'
 import { useCourseStore } from '@/stores/courseStore'
 import { useProgressStore } from '@/stores/progressStore'
 import BasePage from '@/components/layout/BasePage.vue'
+import BreadcrumbNav from '@/components/layout/BreadcrumbNav.vue'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -25,10 +26,18 @@ const startLesson = computed(() => {
 
 const getStatus = (chapterId) => progressStore.getStatus(chapterId)
 
+const breadcrumbItems = computed(() => [
+  { label: '首页', to: '/' },
+  { label: '课程', to: '/courses' },
+  { label: course.value?.title || '课程', to: `/courses/${courseId.value}` },
+  { label: '章节目录' },
+])
+
 </script>
 
 <template>
   <BasePage>
+    <BreadcrumbNav :items="breadcrumbItems" />
     <section class="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
       <div class="rounded-3xl border border-white/80 bg-white/70 p-8 shadow-[0_24px_60px_-40px_rgba(15,23,42,0.35)] backdrop-blur">
         <div class="flex flex-wrap items-center gap-3">
