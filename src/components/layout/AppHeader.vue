@@ -1,5 +1,16 @@
 <script setup>
+import { computed } from 'vue'
 import { Button } from '@/components/ui/button'
+import { Badge } from '@/components/ui/badge'
+import { useAuthStore } from '@/stores/authStore'
+
+const authStore = useAuthStore()
+const isLoggedIn = computed(() => authStore.isLoggedIn)
+const userEmail = computed(() => authStore.user?.email || '')
+
+const handleLogout = async () => {
+  await authStore.logout()
+}
 </script>
 
 <template>
@@ -56,9 +67,21 @@ import { Button } from '@/components/ui/button'
       </router-link>
     </nav>
     <div class="hidden px-3 py-2 md:flex md:justify-self-end">
-      <router-link to="/courses">
-        <Button class="bg-slate-900 text-white hover:bg-slate-800">进入学习</Button>
-      </router-link>
+      <div v-if="isLoggedIn" class="flex items-center gap-3">
+        <Badge variant="outline" class="border-slate-200 bg-white/70 text-slate-700">{{ userEmail }}</Badge>
+        <Button variant="outline" :disabled="authStore.loading" @click="handleLogout">退出登录</Button>
+        <router-link to="/courses">
+          <Button class="bg-slate-900 text-white hover:bg-slate-800">进入学习</Button>
+        </router-link>
+      </div>
+      <div v-else class="flex items-center gap-3">
+        <router-link to="/register">
+          <Button variant="outline">注册</Button>
+        </router-link>
+        <router-link to="/login">
+          <Button class="bg-slate-900 text-white hover:bg-slate-800">登录</Button>
+        </router-link>
+      </div>
     </div>
   </header>
 </template>

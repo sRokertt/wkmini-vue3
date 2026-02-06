@@ -1,12 +1,19 @@
 <script setup>
+import { onMounted } from 'vue'
 import AppHeader from '@/components/layout/AppHeader.vue'
 import AppFooter from '@/components/layout/AppFooter.vue'
+import { useAuthStore } from '@/stores/authStore'
 
 defineProps({
   maxWidth: {
     type: String,
     default: 'max-w-6xl',
   },
+})
+
+const authStore = useAuthStore()
+onMounted(() => {
+  authStore.init()
 })
 </script>
 
