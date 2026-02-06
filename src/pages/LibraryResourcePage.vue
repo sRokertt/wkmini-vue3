@@ -315,6 +315,45 @@ watchEffect(() => {
       <aside class="lg:sticky lg:top-24 lg:self-start">
         <Card class="border-slate-200/80 bg-white/80">
           <CardHeader>
+            <CardTitle>资料目录</CardTitle>
+            <CardDescription>切换资源页面</CardDescription>
+          </CardHeader>
+          <CardContent class="space-y-2 text-sm">
+            <button
+              v-for="section in effectiveOutline"
+              :key="section.id"
+              type="button"
+              class="flex w-full items-center justify-between rounded-xl border bg-white/80 px-3 py-2 text-left transition"
+              :class="
+                selectedSection === section.id
+                  ? 'border-slate-900 text-slate-900'
+                  : 'border-slate-200/70 text-slate-700 hover:border-slate-300'
+              "
+              :aria-current="selectedSection === section.id ? 'page' : undefined"
+              @click="selectSection(section.id)"
+            >
+              <span class="font-medium">{{ section.title }}</span>
+              <span class="text-xs" :class="selectedSection === section.id ? 'text-slate-900' : 'text-slate-400'">→</span>
+            </button>
+          </CardContent>
+        </Card>
+
+        <Card class="mt-4 border-slate-200/80 bg-white/80">
+          <CardHeader>
+            <CardTitle>筛选/标签</CardTitle>
+            <CardDescription>资源属性</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div class="flex flex-wrap gap-2 text-xs text-slate-500">
+              <Badge v-if="item?.type" variant="outline">{{ item.type }}</Badge>
+              <Badge v-if="item?.format" variant="outline">{{ item.format }}</Badge>
+              <Badge v-for="tag in item?.tags || []" :key="tag" variant="outline">{{ tag }}</Badge>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card class="mt-4 border-slate-200/80 bg-white/80">
+          <CardHeader>
             <CardTitle>目录</CardTitle>
             <CardDescription>跳转本节内容</CardDescription>
           </CardHeader>
@@ -336,45 +375,6 @@ watchEffect(() => {
               <span class="min-w-0 flex-1 truncate" :class="toc.level === 3 ? 'text-slate-600' : 'font-medium'">
                 {{ toc.text }}
               </span>
-            </button>
-          </CardContent>
-        </Card>
-
-        <Card class="mt-4 border-slate-200/80 bg-white/80">
-          <CardHeader>
-            <CardTitle>筛选/标签</CardTitle>
-            <CardDescription>资源属性</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div class="flex flex-wrap gap-2 text-xs text-slate-500">
-              <Badge v-if="item?.type" variant="outline">{{ item.type }}</Badge>
-              <Badge v-if="item?.format" variant="outline">{{ item.format }}</Badge>
-              <Badge v-for="tag in item?.tags || []" :key="tag" variant="outline">{{ tag }}</Badge>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card class="mt-4 border-slate-200/80 bg-white/80">
-          <CardHeader>
-            <CardTitle>大纲</CardTitle>
-            <CardDescription>切换资源页面</CardDescription>
-          </CardHeader>
-          <CardContent class="space-y-2 text-sm">
-            <button
-              v-for="section in effectiveOutline"
-              :key="section.id"
-              type="button"
-              class="flex w-full items-center justify-between rounded-xl border bg-white/80 px-3 py-2 text-left transition"
-              :class="
-                selectedSection === section.id
-                  ? 'border-slate-900 text-slate-900'
-                  : 'border-slate-200/70 text-slate-700 hover:border-slate-300'
-              "
-              :aria-current="selectedSection === section.id ? 'page' : undefined"
-              @click="selectSection(section.id)"
-            >
-              <span class="font-medium">{{ section.title }}</span>
-              <span class="text-xs" :class="selectedSection === section.id ? 'text-slate-900' : 'text-slate-400'">→</span>
             </button>
           </CardContent>
         </Card>
