@@ -30,6 +30,7 @@ const reasonText = computed(() => {
     'courses-empty': '课程列表为空',
     'paths-empty': '路径列表为空',
     'library-empty': '资料库为空',
+    'library-not-found': '资料不存在',
   }
   return map[reason.value] || ''
 })

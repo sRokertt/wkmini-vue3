@@ -9,6 +9,8 @@ import PathsPage from '@/pages/PathsPage.vue'
 import PathDetailPage from '@/pages/PathDetailPage.vue'
 import PathStartPage from '@/pages/PathStartPage.vue'
 import LibraryPage from '@/pages/LibraryPage.vue'
+import LibraryDetailPage from '@/pages/LibraryDetailPage.vue'
+import LibraryResourcePage from '@/pages/LibraryResourcePage.vue'
 import AboutPage from '@/pages/AboutPage.vue'
 import ErrorNotFoundPage from '@/pages/ErrorNotFoundPage.vue'
 import ErrorForbiddenPage from '@/pages/ErrorForbiddenPage.vue'
@@ -30,6 +32,8 @@ const router = createRouter({
     { path: '/paths/:id', name: 'path-detail', component: PathDetailPage },
     { path: '/paths/:id/start', name: 'path-start', component: PathStartPage },
     { path: '/library', name: 'library', component: LibraryPage },
+    { path: '/library/:id', name: 'library-detail', component: LibraryDetailPage },
+    { path: '/library/:id/resource', name: 'library-resource', component: LibraryResourcePage },
     { path: '/about', name: 'about', component: AboutPage },
     { path: '/errors/404', name: 'error-404', component: ErrorNotFoundPage },
     { path: '/errors/403', name: 'error-403', component: ErrorForbiddenPage },
@@ -112,6 +116,14 @@ router.beforeEach((to) => {
   }
 
   const id = Number(idParam)
+  if (to.name === 'library-detail' || to.name === 'library-resource') {
+    const libraryStore = useLibraryStore()
+    const exists = libraryStore.itemList.some((item) => item.id === id)
+    if (!exists) {
+      recordError(to, 'library-not-found')
+      return errorRoute('error-404', to, 'library-not-found')
+    }
+  }
   if (to.name === 'course-detail' || to.name === 'course-chapters' || to.name === 'course-plan') {
     const courseStore = useCourseStore()
     const exists = courseStore.courseList.some((item) => item.id === id)

@@ -3,6 +3,7 @@ import BasePage from '@/components/layout/BasePage.vue'
 import LibraryGrid from '@/components/library/LibraryGrid.vue'
 import LibraryHeader from '@/components/library/LibraryHeader.vue'
 import LibraryTabs from '@/components/library/LibraryTabs.vue'
+import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { TabsContent } from '@/components/ui/tabs'
@@ -31,9 +32,14 @@ const toolItems = computed(() => libraryStore.filteredByCategory('tools'))
                 </CardHeader>
                 <CardContent>
                   <p class="text-sm text-slate-600">{{ item.summary }}</p>
+                  <div class="mt-3 flex flex-wrap gap-2 text-xs text-slate-500">
+                    <Badge v-if="item.type" variant="outline">{{ item.type }}</Badge>
+                    <Badge v-if="item.format" variant="outline">{{ item.format }}</Badge>
+                    <Badge v-for="tag in (item.tags || []).slice(0, 2)" :key="tag" variant="outline">{{ tag }}</Badge>
+                  </div>
                 </CardContent>
                 <CardFooter>
-                  <Button variant="outline" size="sm" @click="$router.push('/errors/403')">进入</Button>
+                  <Button variant="outline" size="sm" @click="$router.push(`/library/${item.id}`)">进入</Button>
                 </CardFooter>
               </Card>
           </LibraryGrid>
@@ -54,9 +60,14 @@ const toolItems = computed(() => libraryStore.filteredByCategory('tools'))
                 </CardHeader>
                 <CardContent>
                   <p class="text-sm text-slate-600">{{ item.summary }}</p>
+                  <div class="mt-3 flex flex-wrap gap-2 text-xs text-slate-500">
+                    <Badge v-if="item.type" variant="outline">{{ item.type }}</Badge>
+                    <Badge v-if="item.format" variant="outline">{{ item.format }}</Badge>
+                    <Badge v-for="tag in (item.tags || []).slice(0, 2)" :key="tag" variant="outline">{{ tag }}</Badge>
+                  </div>
                 </CardContent>
                 <CardFooter>
-                  <Button variant="outline" size="sm" @click="$router.push('/errors/403')">进入</Button>
+                  <Button variant="outline" size="sm" @click="$router.push(`/library/${item.id}`)">进入</Button>
                 </CardFooter>
               </Card>
           </LibraryGrid>
@@ -77,9 +88,14 @@ const toolItems = computed(() => libraryStore.filteredByCategory('tools'))
                 </CardHeader>
                 <CardContent>
                   <p class="text-sm text-slate-600">{{ item.summary }}</p>
+                  <div class="mt-3 flex flex-wrap gap-2 text-xs text-slate-500">
+                    <Badge v-if="item.type" variant="outline">{{ item.type }}</Badge>
+                    <Badge v-if="item.format" variant="outline">{{ item.format }}</Badge>
+                    <Badge v-for="tag in (item.tags || []).slice(0, 2)" :key="tag" variant="outline">{{ tag }}</Badge>
+                  </div>
                 </CardContent>
                 <CardFooter>
-                  <Button variant="outline" size="sm" @click="$router.push('/errors/403')">进入</Button>
+                  <Button variant="outline" size="sm" @click="$router.push(`/library/${item.id}`)">进入</Button>
                 </CardFooter>
               </Card>
           </LibraryGrid>
@@ -100,9 +116,14 @@ const toolItems = computed(() => libraryStore.filteredByCategory('tools'))
                 </CardHeader>
                 <CardContent>
                   <p class="text-sm text-slate-600">{{ item.summary }}</p>
+                  <div class="mt-3 flex flex-wrap gap-2 text-xs text-slate-500">
+                    <Badge v-if="item.type" variant="outline">{{ item.type }}</Badge>
+                    <Badge v-if="item.format" variant="outline">{{ item.format }}</Badge>
+                    <Badge v-for="tag in (item.tags || []).slice(0, 2)" :key="tag" variant="outline">{{ tag }}</Badge>
+                  </div>
                 </CardContent>
                 <CardFooter>
-                  <Button variant="outline" size="sm" @click="$router.push('/errors/403')">进入</Button>
+                  <Button variant="outline" size="sm" @click="$router.push(`/library/${item.id}`)">进入</Button>
                 </CardFooter>
               </Card>
           </LibraryGrid>
