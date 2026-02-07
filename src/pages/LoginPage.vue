@@ -12,6 +12,9 @@ const route = useRoute()
 const router = useRouter()
 const authStore = useAuthStore()
 
+const fakeAuthEnabled =
+  import.meta.env.DEV && String(import.meta.env.VITE_FAKE_AUTH || '').toLowerCase() === 'true'
+
 const MIN_PASSWORD_LENGTH = 8
 
 const identifier = ref('')
@@ -84,6 +87,12 @@ const submit = async () => {
               @keydown.enter.prevent="submit"
             />
             <p class="rounded-xl border px-3 py-2 text-xs" :class="passwordHintTone">{{ passwordHint }}</p>
+            <p
+              v-if="fakeAuthEnabled"
+              class="rounded-xl border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-800"
+            >
+              前端假登录已启用：`demo` / `demo@wkmini.dev`，密码 `12345678`。
+            </p>
           </div>
 
           <p v-if="errorText" class="rounded-xl border border-rose-200 bg-rose-50 px-3 py-2 text-xs text-rose-700">

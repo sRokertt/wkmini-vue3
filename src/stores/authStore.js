@@ -1,9 +1,28 @@
 import { defineStore } from 'pinia'
 import { apiRequest } from '@/lib/api'
 
+const FAKE_AUTH_ENABLED =
+  import.meta.env.DEV && String(import.meta.env.VITE_FAKE_AUTH || '').toLowerCase() === 'true'
+
+const FAKE_USER = {
+  id: 1,
+  username: 'demo',
+  email: 'demo@wkmini.dev',
+}
+
+const matchesFakeIdentifier = (identifier) => {
+  const v = String(identifier || '').trim().toLowerCase()
+  return v === 'demo' || v === 'demo@wkmini.dev'
+}
+
+const isFakePasswordValid = (password) => String(password || '') === '12345678'
+
 const backendUnavailableMessage = (status) => {
   const suffix = status ? `（HTTP ${status}）` : ''
-  return `后端未启动或 /api 代理不可用${suffix}。请先启动 wkmini-server（默认 http://localhost:8080）。`
+  const extra = FAKE_AUTH_ENABLED
+    ? '（已启用前端假登录：demo / demo@wkmini.dev + 12345678）'
+    : '（可在前端启用 VITE_FAKE_AUTH=true 使用假登录）'
+  return `后端未启动或 /api 代理不可用${suffix}。请先启动 wkmini-server（默认 http://localhost:8080）。${extra}`
 }
 
 const isBackendUnavailable = (error) => {
@@ -54,6 +73,11 @@ export const useAuthStore = defineStore('auth', {
     async login(identifier, password) {
       this.loading = true
       try {
+        if (FAKE_AUTH_ENABLED && matchesFakeIdentifier(identifier) && isFakePasswordValid(password)) {
+          this.user = FAKE_USER
+          return
+        }
+
         await this.fetchCsrf()
         const payload = await apiRequest('/api/v1/auth/login', {
           method: 'POST',
@@ -88,6 +112,9 @@ export const useAuthStore = defineStore('auth', {
     async logout() {
       this.loading = true
       try {
+        if (FAKE_AUTH_ENABLED) {
+          return
+        }
         await this.fetchCsrf()
         await apiRequest('/api/v1/auth/logout', { method: 'POST', csrf: true })
       } finally {
