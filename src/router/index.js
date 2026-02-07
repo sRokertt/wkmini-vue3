@@ -14,6 +14,7 @@ import LibraryResourcePage from '@/pages/LibraryResourcePage.vue'
 import AboutPage from '@/pages/AboutPage.vue'
 import LoginPage from '@/pages/LoginPage.vue'
 import RegisterPage from '@/pages/RegisterPage.vue'
+import MePage from '@/pages/MePage.vue'
 import ErrorNotFoundPage from '@/pages/ErrorNotFoundPage.vue'
 import ErrorForbiddenPage from '@/pages/ErrorForbiddenPage.vue'
 import ErrorServerPage from '@/pages/ErrorServerPage.vue'
@@ -39,6 +40,7 @@ const router = createRouter({
     { path: '/about', name: 'about', component: AboutPage },
     { path: '/login', name: 'login', component: LoginPage },
     { path: '/register', name: 'register', component: RegisterPage },
+    { path: '/me', name: 'me', component: MePage },
     { path: '/errors/404', name: 'error-404', component: ErrorNotFoundPage },
     { path: '/errors/403', name: 'error-403', component: ErrorForbiddenPage },
     { path: '/errors/500', name: 'error-500', component: ErrorServerPage },

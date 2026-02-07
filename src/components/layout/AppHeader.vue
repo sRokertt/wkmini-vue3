@@ -1,16 +1,63 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { useAuthStore } from '@/stores/authStore'
 
 const authStore = useAuthStore()
+const route = useRoute()
 const isLoggedIn = computed(() => authStore.isLoggedIn)
-const userEmail = computed(() => authStore.user?.email || '')
+const userLabel = computed(() => authStore.user?.username || authStore.user?.email || '')
+
+const menuOpen = ref(false)
+const triggerRef = ref(null)
+const menuRef = ref(null)
+
+const closeMenu = () => {
+  menuOpen.value = false
+}
+
+const toggleMenu = () => {
+  menuOpen.value = !menuOpen.value
+}
+
+const onDocumentClick = (event) => {
+  if (!menuOpen.value) return
+  const target = event.target
+  const triggerEl = triggerRef.value
+  const menuEl = menuRef.value
+  if (triggerEl && triggerEl.contains(target)) return
+  if (menuEl && menuEl.contains(target)) return
+  closeMenu()
+}
+
+const onDocumentKeydown = (event) => {
+  if (!menuOpen.value) return
+  if (event.key === 'Escape') closeMenu()
+}
 
 const handleLogout = async () => {
   await authStore.logout()
+  closeMenu()
 }
+
+watch(
+  () => route.fullPath,
+  () => {
+    closeMenu()
+  }
+)
+
+onMounted(() => {
+  document.addEventListener('click', onDocumentClick, true)
+  document.addEventListener('keydown', onDocumentKeydown)
+})
+
+onBeforeUnmount(() => {
+  document.removeEventListener('click', onDocumentClick, true)
+  document.removeEventListener('keydown', onDocumentKeydown)
+})
 </script>
 
 <template>
@@ -68,8 +115,45 @@ const handleLogout = async () => {
     </nav>
     <div class="hidden px-3 py-2 md:flex md:justify-self-end">
       <div v-if="isLoggedIn" class="flex items-center gap-3">
-        <Badge variant="outline" class="border-slate-200 bg-white/70 text-slate-700">{{ userEmail }}</Badge>
-        <Button variant="outline" :disabled="authStore.loading" @click="handleLogout">退出登录</Button>
+        <div class="relative">
+          <button
+            ref="triggerRef"
+            type="button"
+            class="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white/70 px-3 py-2 text-xs font-medium text-slate-700 transition hover:border-slate-300 hover:text-slate-900"
+            :aria-expanded="menuOpen ? 'true' : 'false'"
+            aria-haspopup="menu"
+            @click="toggleMenu"
+          >
+            <Badge class="bg-slate-900 text-white">我</Badge>
+            <span class="max-w-[180px] truncate">{{ userLabel }}</span>
+            <span class="text-slate-400">▾</span>
+          </button>
+
+          <div
+            v-if="menuOpen"
+            ref="menuRef"
+            role="menu"
+            class="absolute right-0 z-50 mt-2 w-52 overflow-hidden rounded-2xl border border-slate-200/80 bg-white/95 shadow-lg shadow-slate-900/10 backdrop-blur"
+          >
+            <router-link
+              to="/me"
+              role="menuitem"
+              class="block px-4 py-3 text-sm text-slate-700 transition hover:bg-slate-50 hover:text-slate-900"
+            >
+              个人中心
+            </router-link>
+            <div class="h-px bg-slate-200/80" />
+            <button
+              type="button"
+              role="menuitem"
+              class="block w-full px-4 py-3 text-left text-sm text-slate-700 transition hover:bg-slate-50 hover:text-slate-900"
+              :disabled="authStore.loading"
+              @click="handleLogout"
+            >
+              退出登录
+            </button>
+          </div>
+        </div>
         <router-link to="/courses">
           <Button class="bg-slate-900 text-white hover:bg-slate-800">进入学习</Button>
         </router-link>
