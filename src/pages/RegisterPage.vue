@@ -12,7 +12,10 @@ const route = useRoute()
 const router = useRouter()
 const authStore = useAuthStore()
 
+const MIN_PASSWORD_LENGTH = 8
+
 const email = ref('')
+const username = ref('')
 const password = ref('')
 const errorText = ref('')
 
@@ -21,14 +24,26 @@ const redirectTo = computed(() => String(route.query.redirect || '/'))
 const canSubmit = computed(() => {
   if (authStore.loading) return false
   if (!email.value.trim()) return false
-  if (password.value.length < 12) return false
+  if (password.value.length < MIN_PASSWORD_LENGTH) return false
   return true
+})
+
+const passwordHint = computed(() => {
+  if (!password.value) return `密码至少 ${MIN_PASSWORD_LENGTH} 位。建议使用更长口令。`
+  if (password.value.length < MIN_PASSWORD_LENGTH) return `密码长度不足：至少需要 ${MIN_PASSWORD_LENGTH} 位。`
+  return `长度已满足（>= ${MIN_PASSWORD_LENGTH}）。建议加入更长的短语提高安全性。`
+})
+
+const passwordHintTone = computed(() => {
+  if (!password.value) return 'border-slate-200 bg-slate-50 text-slate-600'
+  if (password.value.length < MIN_PASSWORD_LENGTH) return 'border-rose-200 bg-rose-50 text-rose-700'
+  return 'border-emerald-200 bg-emerald-50 text-emerald-700'
 })
 
 const submit = async () => {
   errorText.value = ''
   try {
-    await authStore.register(email.value, password.value)
+    await authStore.register(email.value, password.value, username.value)
     router.replace(redirectTo.value)
   } catch (e) {
     errorText.value = e?.message || '注册失败'
@@ -50,6 +65,19 @@ const submit = async () => {
         </CardHeader>
         <CardContent class="space-y-4">
           <div class="space-y-2">
+            <label class="text-xs font-medium text-slate-500" for="register-username">用户名（可选）</label>
+            <Input
+              id="register-username"
+              v-model="username"
+              type="text"
+              placeholder="用于用户名登录"
+              autocomplete="username"
+            />
+            <p class="rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-xs text-slate-600">
+              你可以用“用户名或邮箱”登录；不填写也可以，后续用邮箱登录。
+            </p>
+          </div>
+          <div class="space-y-2">
             <label class="text-xs font-medium text-slate-500" for="register-email">邮箱</label>
             <Input id="register-email" v-model="email" type="email" placeholder="you@example.com" autocomplete="email" />
           </div>
@@ -59,10 +87,11 @@ const submit = async () => {
               id="register-password"
               v-model="password"
               type="password"
-              placeholder="至少 12 位"
+              placeholder="请输入密码"
               autocomplete="new-password"
               @keydown.enter.prevent="submit"
             />
+            <p class="rounded-xl border px-3 py-2 text-xs" :class="passwordHintTone">{{ passwordHint }}</p>
           </div>
 
           <p v-if="errorText" class="rounded-xl border border-rose-200 bg-rose-50 px-3 py-2 text-xs text-rose-700">

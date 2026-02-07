@@ -12,7 +12,9 @@ const route = useRoute()
 const router = useRouter()
 const authStore = useAuthStore()
 
-const email = ref('')
+const MIN_PASSWORD_LENGTH = 8
+
+const identifier = ref('')
 const password = ref('')
 const errorText = ref('')
 
@@ -20,15 +22,27 @@ const redirectTo = computed(() => String(route.query.redirect || '/'))
 
 const canSubmit = computed(() => {
   if (authStore.loading) return false
-  if (!email.value.trim()) return false
-  if (password.value.length < 12) return false
+  if (!identifier.value.trim()) return false
+  if (password.value.length < MIN_PASSWORD_LENGTH) return false
   return true
+})
+
+const passwordHint = computed(() => {
+  if (!password.value) return `密码至少 ${MIN_PASSWORD_LENGTH} 位。`
+  if (password.value.length < MIN_PASSWORD_LENGTH) return `密码长度不足：至少需要 ${MIN_PASSWORD_LENGTH} 位。`
+  return `长度已满足（>= ${MIN_PASSWORD_LENGTH}）。`
+})
+
+const passwordHintTone = computed(() => {
+  if (!password.value) return 'border-slate-200 bg-slate-50 text-slate-600'
+  if (password.value.length < MIN_PASSWORD_LENGTH) return 'border-rose-200 bg-rose-50 text-rose-700'
+  return 'border-emerald-200 bg-emerald-50 text-emerald-700'
 })
 
 const submit = async () => {
   errorText.value = ''
   try {
-    await authStore.login(email.value, password.value)
+    await authStore.login(identifier.value, password.value)
     router.replace(redirectTo.value)
   } catch (e) {
     errorText.value = e?.message || '登录失败'
@@ -46,12 +60,18 @@ const submit = async () => {
             <Badge variant="outline" class="border-amber-300/60 bg-amber-50 text-amber-700">v1.1</Badge>
           </div>
           <CardTitle class="mt-4">欢迎回来</CardTitle>
-          <CardDescription>使用邮箱与密码继续你的学习进度。</CardDescription>
+          <CardDescription>支持用户名或邮箱登录。</CardDescription>
         </CardHeader>
         <CardContent class="space-y-4">
           <div class="space-y-2">
-            <label class="text-xs font-medium text-slate-500" for="login-email">邮箱</label>
-            <Input id="login-email" v-model="email" type="email" placeholder="you@example.com" autocomplete="email" />
+            <label class="text-xs font-medium text-slate-500" for="login-identifier">用户名或邮箱</label>
+            <Input
+              id="login-identifier"
+              v-model="identifier"
+              type="text"
+              placeholder="用户名 / 邮箱"
+              autocomplete="username"
+            />
           </div>
           <div class="space-y-2">
             <label class="text-xs font-medium text-slate-500" for="login-password">密码</label>
@@ -59,10 +79,11 @@ const submit = async () => {
               id="login-password"
               v-model="password"
               type="password"
-              placeholder="至少 12 位"
+              placeholder="请输入密码"
               autocomplete="current-password"
               @keydown.enter.prevent="submit"
             />
+            <p class="rounded-xl border px-3 py-2 text-xs" :class="passwordHintTone">{{ passwordHint }}</p>
           </div>
 
           <p v-if="errorText" class="rounded-xl border border-rose-200 bg-rose-50 px-3 py-2 text-xs text-rose-700">
